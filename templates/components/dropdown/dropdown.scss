@@ -1,0 +1,55 @@
+.dropdown {
+
+  .card-header {
+    background: #ffffff;
+    border-bottom: 0px;
+  }
+
+  .header-titles>.row>div {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  .accordion .card {
+    border: 0px;
+  }
+
+  .accordion {
+
+    .card-header {
+      cursor: pointer;
+
+      &:after {
+        font-family: 'icomoon';
+        speak: none;
+        font-style: normal;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1;
+        /* Better Font Rendering =========== */
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        content: "\eb0f";
+        float: right;
+        color: #0097D7;
+        font-size: 40px;
+        margin-left: 1rem;
+      }
+    }
+
+  }
+
+  .accordion .card-header.collapsed:after {
+    /* symbol for "collapsed" panels */
+    content: "\eb10";
+  }
+
+  &.bg-grey,
+  &.bg-grey .card-header,
+  &.bg-grey .card-body,
+  &.bg-grey .dd-divider {
+    background: #FAFAFA;
+  }
+
+}
