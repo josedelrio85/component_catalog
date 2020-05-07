@@ -7,8 +7,29 @@
 
 // any CSS you import will output into a single css file (app.css in this case)
 import '../css/app.css';
+import 'bootstrap';
 
 // Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
 // import $ from 'jquery';
 
 console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
+
+document.addEventListener("DOMContentLoaded", function (event) {
+
+    // Copy to clipboard
+    document.querySelectorAll('.copy-clipboard').forEach(div => {
+        div.addEventListener('click', function() {
+            navigator.clipboard.writeText(this.nextSibling.innerText)
+            .then(() => {  
+                // Text copied to clipboard
+                //console.log('Text copied to clipboard');
+            })
+            .catch(err => {
+              // If the user denies clipboard permissions:
+              console.error('Could not copy text: ', err);
+            });
+        
+        });
+    });
+
+});

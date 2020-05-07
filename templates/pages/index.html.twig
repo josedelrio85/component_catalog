@@ -3,21 +3,14 @@
 {% block title %}Hello IndexController!{% endblock %}
 
 {% block body %}
-<style>
-  .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-  .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+<div class="container">
+  <h1>Hello {{ controller_name }}! ✅</h1>
 
-  code { 
-    background: hsl(220, 80%, 90%); 
-  }
-
-  pre {
-    white-space: pre-wrap;
-    background: hsl(30,80%,90%);
-  }
-</style>
-
-<div class="example-wrapper">
+  This friendly message is coming from:
+  <ul>
+    <li>Your controller at <code><a href="{{ '/home/jose/Code/github.com/Bysidecar/comp_catalog/src/Controller/IndexController.php'|file_link(0) }}">src/Controller/IndexController.php</a></code></li>
+    <li>Your template at <code><a href="{{ '/home/jose/Code/github.com/Bysidecar/comp_catalog/templates/pages/index.html.twig'|file_link(0) }}">templates/pages/index.html.twig</a></code></li>
+  </ul>
 
   <div>
     {% for key, component in data %}
@@ -41,7 +34,7 @@
 
       <h3> HTML code </h3>
 
-      <pre><code>{{component.html.content }}</code></pre>
+      <pre class="code-block"><span class="copy-clipboard">Copy</span><code>{{component.html.content }}</code></pre>
       
       <br>----------------------- <br>
 
@@ -49,7 +42,7 @@
 
       {{component.styles.template }}
 
-      <pre><code>{{component.styles.content }}</code></pre>
+      <pre class="code-block"><span class="copy-clipboard">Copy</span><code>{{component.styles.content }}</code></pre>
       <br>----------------------- <br>
     {% endfor %}
   </div>
