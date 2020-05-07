@@ -16,17 +16,19 @@ class IndexController extends AbstractController
     $this->fdserv = $fdserv;
   }
 
-  public function index() {
 
-    // data:
-    //   path:
-    //   html:
-    //     template:
-    //     data:
-    //     content:
-    //   styles:
-    //     template:
-    //     content:
+  // data:
+  //   path:
+  //   html:
+  //     template:
+  //     data:
+  //     content:
+  //   styles:
+  //     template:
+  //     content:
+
+
+  public function index() {
 
     $data = $this->fdserv->getData();
     // dump($data);die();
