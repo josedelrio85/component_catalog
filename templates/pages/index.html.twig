@@ -12,31 +12,41 @@
     <li>Your template at <code><a href="{{ '/home/jose/Code/github.com/Bysidecar/comp_catalog/templates/pages/index.html.twig'|file_link(0) }}">templates/pages/index.html.twig</a></code></li>
   </ul>
 
+  <div class="search-form">
+    <h2>Buscar...</h2>
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" id="term-search" placeholder="Introduce tu búsqueda" aria-label="Introduce tu búsqueda" aria-describedby="basic-addon2">
+      <div class="input-group-append">
+        <button class="btn btn-outline-secondary" type="button" id="submit-search">🔍</button>
+      </div>
+    </div>
+  </div>
+
   <div class="pt-0">
     {% for key, component in data %}
+      <div class="single-component">
+        {# {{dump(component)}} #}
+        <hr class="my-5">
+        <h2 class="mb-4">{{key}}</h2>
+        <h2 class="h5 font-italic"> Template name </h2>
+        <span>{{component.html.template }}</span>
 
-      {# {{dump(component)}} #}
-      <hr class="my-5">
-      <h2 class="mb-4">{{key}}</h2>
-      <h2 class="h5 font-italic"> Template name </h2>
-      <span>{{component.html.template }}</span>
+        {% if component.html.data is not null %}
+          <div class="p-3 mt-4 border">
+            <div class="b-block py-3"></div>
+            <h2 class="h5 font-italic"> Preview </h2>
+            {% set content = include(component.html.template, { items: component.html.data}) %}
+            {{ content | raw}}
+          </div>
+        {% endif %}
 
-      {% if component.html.data is not null %}
-        <div class="p-3 mt-4 border">
-          <div class="b-block py-3"></div>
-          <h2 class="h5 font-italic"> Preview </h2>
-          {% set content = include(component.html.template, { items: component.html.data}) %}
-          {{ content | raw}}
-        </div>
-      {% endif %}
-
-      {# <h2 class="h5 font-italic"> HTML code </h2> #}
-      <pre class="code-block mb-4"><span class="copy-clipboard">Copy</span><code>{{component.html.content }}</code></pre>
-      
-      <h2 class="h5 font-italic"> Styles  </h2>
-      <span>{{component.styles.template }}</span>
-      <pre class="code-block mt-3"><span class="copy-clipboard">Copy</span><code>{{component.styles.content }}</code></pre>
-
+        {# <h2 class="h5 font-italic"> HTML code </h2> #}
+        <pre class="code-block mb-4"><span class="copy-clipboard">Copy</span><code>{{component.html.content }}</code></pre>
+        
+        <h2 class="h5 font-italic"> Styles  </h2>
+        <span>{{component.styles.template }}</span>
+        <pre class="code-block mt-3"><span class="copy-clipboard">Copy</span><code>{{component.styles.content }}</code></pre>
+      </div>
     {% endfor %}
   </div>
 </div>
