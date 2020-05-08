@@ -3,7 +3,7 @@
 {% block title %}Hello IndexController!{% endblock %}
 
 {% block body %}
-<div class="container">
+<div class="container py-5">
   <h1>Hello {{ controller_name }}! ✅</h1>
 
   This friendly message is coming from:
@@ -12,38 +12,31 @@
     <li>Your template at <code><a href="{{ '/home/jose/Code/github.com/Bysidecar/comp_catalog/templates/pages/index.html.twig'|file_link(0) }}">templates/pages/index.html.twig</a></code></li>
   </ul>
 
-  <div>
+  <div class="pt-0">
     {% for key, component in data %}
 
       {# {{dump(component)}} #}
-      <h2>{{key}}</h2>
-
-      <h3> Template name </h3>
-
-      {{component.html.template }}
-      <br>----------------------- <br>
-
+      <hr class="my-5">
+      <h2 class="mb-4">{{key}}</h2>
+      <h2 class="h5 font-italic"> Template name </h2>
+      <span>{{component.html.template }}</span>
 
       {% if component.html.data is not null %}
-        <h3> Preview </h3>
-
-        {% set content = include(component.html.template, { items: component.html.data}) %}
-        {{ content | raw}}
-        <br>----------------------- <br>
+        <div class="p-3 mt-4 border">
+          <div class="b-block py-3"></div>
+          <h2 class="h5 font-italic"> Preview </h2>
+          {% set content = include(component.html.template, { items: component.html.data}) %}
+          {{ content | raw}}
+        </div>
       {% endif %}
 
-      <h3> HTML code </h3>
-
-      <pre class="code-block"><span class="copy-clipboard">Copy</span><code>{{component.html.content }}</code></pre>
+      {# <h2 class="h5 font-italic"> HTML code </h2> #}
+      <pre class="code-block mb-4"><span class="copy-clipboard">Copy</span><code>{{component.html.content }}</code></pre>
       
-      <br>----------------------- <br>
+      <h2 class="h5 font-italic"> Styles  </h2>
+      <span>{{component.styles.template }}</span>
+      <pre class="code-block mt-3"><span class="copy-clipboard">Copy</span><code>{{component.styles.content }}</code></pre>
 
-      <h3> CSS  </h3>
-
-      {{component.styles.template }}
-
-      <pre class="code-block"><span class="copy-clipboard">Copy</span><code>{{component.styles.content }}</code></pre>
-      <br>----------------------- <br>
     {% endfor %}
   </div>
 </div>
