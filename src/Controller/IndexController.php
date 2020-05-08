@@ -27,11 +27,12 @@ class IndexController extends AbstractController
   //     template:
   //     content:
 
-
+  /**
+   * @Route("/", name="index")
+   */
   public function index() {
 
     $data = $this->fdserv->getData();
-    // dump($data);die();
 
     return $this->render('pages/index.html.twig', [
       'controller_name' => 'IndexController',

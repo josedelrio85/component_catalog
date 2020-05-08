@@ -31,71 +31,88 @@ class ComponentCreatorService {
 
   public function create(Component $component){
     if(!empty($component)){
-      $template = $component->getHtmlTemplate();
       $base = $this->basedir.DIRECTORY_SEPARATOR;
-      // TODO check owner of the files!!!
-      $folder = "components/{$template}";
+      $folder = explode('/', $component->getHtmlTemplate())[1];
+      $path = $base.$component->getHtmlTemplate();
 
-      if(!$this->filesystem->exists($folder)){
-        $this->filesystem->mkdir($base.$folder);
-      }
-
-      //html.template + html.content
-      $path = $folder.DIRECTORY_SEPARATOR."{$template}.html.twig";
       try {
-        $this->filesystem->dumpFile($base.$path, $component->getHtmlContent());
+        $this->filesystem->dumpFile($path, $component->getHtmlContent());
       }catch(IOException $e){
         dump($e);
       }
 
-      //styles.template + styles.content
-      $styles_template = $component->getStylesTemplate();
-      $styles_path = $folder.DIRECTORY_SEPARATOR."{$styles_template}.scss";
+      $styles_path = $base.$component->getStylesTemplate();
       try {
-        $this->filesystem->dumpFile($base.$styles_path, $component->getStylesContent());
+        $this->filesystem->dumpFile($styles_path, $component->getStylesContent());
       }catch(IOException $e){
         dump($e);
       }
 
       // html.data
-      // $this->test();
-
+      $this->setDataInYaml($component);
     }
   }
 
-  public function test(Component $component) {
-    // html.data
+  protected function setDataInYaml(Component $component, bool $remove = false) {
     $comp_path = explode(DIRECTORY_SEPARATOR, $component->getPath());
     $key = end($comp_path);
 
     $yamlpath = $this->compS->getPath();
-    if(!is_null($this->compS->getDataForComponent($key))){
-      // there is an entry in file, we must update it!
-      // think about it!!!
+    $data_comp = $this->compS->getDataForComponent($key);
+
+    $data_json = $component->getHtmlData();
+    $data = json_decode($data_json, true);
+    $pattern = array(
+      $key => [
+        "active"=> true,
+        "data" => $data,
+      ],
+    );
+
+    // dump($data); dump($data_comp);die();
+
+    $alldata = $this->compS->getData();
+    if(!is_null($data)){
+      if(!is_null($data_comp)){
+        if($remove){
+          unset($alldata[$key]);
+        } else {
+          $alldata[$key] = $pattern[$key];
+        }
+        file_put_contents($yamlpath, null);
+        $this->put_content($yamlpath, $alldata);
+  
+      } else {
+        // there is not an entry in file, add to file
+        $this->put_content($yamlpath, $pattern);  
+      }
+
     } else {
-      // there is not an entry in file, add to file
-      $data_json = $component->getHtmlData();
-      $data = json_decode($data_json, true);
-      $pattern = array(
-        $key => [
-          "active"=> true,
-          "data" => $data,
-        ],
-      );
-      $yaml = Yaml::dump($pattern, 4, 2);
-      file_put_contents($yamlpath, $yaml, FILE_APPEND);
-      // file_put_contents($yamlpath, PHP_EOL, FILE_APPEND);
+      if(!is_null($data_comp)){  
+        // there is an entry in file, we must remove it!
+        unset($alldata[$key]);  
+        file_put_contents($yamlpath, null);
+        $this->put_content($yamlpath, $alldata);  
+      }
     }
+  }
+
+  private function put_content($yamlpath, $alldata) {
+    $yaml = Yaml::dump($alldata, 4, 2);
+    file_put_contents($yamlpath, $yaml, FILE_APPEND);
   }
 
   public function delete(Component $component){
     if(!empty($component)){
-      $template = $component->getHtmlTemplate();
-      $base = $this->basedir.DIRECTORY_SEPARATOR;
-      $folder = "components/{$template}";
 
-      if(!$this->filesystem->exists($folder)){
-        $this->filesystem->delete($base.$folder);
+      $base = $this->basedir.DIRECTORY_SEPARATOR;
+      $folder = explode('/', $component->getHtmlTemplate());
+      $path = $base.$folder[0].DIRECTORY_SEPARATOR.$folder[1];
+
+      $this->setDataInYaml($component, true);
+
+      if($this->filesystem->exists($path)){
+        $this->filesystem->remove($path);
       }
     }
   }

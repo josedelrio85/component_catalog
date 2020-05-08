@@ -20,6 +20,14 @@ class ComponentDataService {
     return $configDir.DIRECTORY_SEPARATOR.'component_data.yaml';
   }
 
+  public function getData() {
+    $compdata = [];
+    foreach($this->compdata as $i => $comp){
+      $compdata[$i] = $comp;
+    }
+    return $compdata;
+  }
+
   public function getComponentData() {
     $compdata = [];
     foreach($this->compdata as $i => $comp){

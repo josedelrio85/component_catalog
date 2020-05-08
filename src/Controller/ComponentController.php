@@ -24,13 +24,13 @@ class ComponentController extends AbstractController
      * @Route("/component", name="component")
      */
     public function index() {
-      return $this->render('pages/component/index.html.twig', []);
+      return $this->render('pages/index.html.twig', []);
     }
 
     /**
-     * @Route("/component/change/{path}", name="component_edit")
+     * @Route("/component/change/{path}", name="component_change")
      */
-    public function edit(Request $request, string $path = null) {
+    public function change(Request $request, string $path = null) {
       if(is_null($path)) {
         $comp = new Component();
       } else {
@@ -43,12 +43,11 @@ class ComponentController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()){
           $comp = $form->getData();
-          // $this->ccserv->create($comp);
-          $this->ccserv->test($comp);
-          return $this->redirectToRoute('component');
+          $this->ccserv->create($comp);
+          return $this->redirectToRoute('index');
         }
 
-        return $this->render('pages/component/component.html.twig', [
+        return $this->render('pages/component.html.twig', [
           'form' => $form->createView(),
         ]);
       }
@@ -56,9 +55,9 @@ class ComponentController extends AbstractController
     }
 
     /**
-     * @Route("/component/delete/{id}", name="component_delete")
+     * @Route("/component/delete/{path}", name="component_delete")
      */
-    public function delete(Request $request, int $id) {
+    public function delete(Request $request, string $path = null) {
       $comp = $this->fdserv->getComponent($path);
       if(!is_null($comp)){
 
@@ -68,9 +67,9 @@ class ComponentController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()){
           $comp = $form->getData();
           $this->ccserv->delete($comp);
-          return $this->redirectToRoute('component');
+          return $this->redirectToRoute('index');
         }
-        return $this->render('pages/component/component.html.twig', [
+        return $this->render('pages/component.html.twig', [
           'form' => $form->createView(),
         ]);
       }
