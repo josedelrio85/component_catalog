@@ -1,0 +1,31 @@
+.code-block {
+    white-space: pre-wrap;
+    background: $gray-100;
+    padding: 20px;
+    position: relative;
+
+    code {
+        font-family: 'Source Sans Pro', sans-serif;
+        background-color: $gray-100;
+        display: block;
+        color: $gray-600;
+        font-size: $font-size-base;
+    }
+}
+
+.copy-clipboard {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: $gray-200;
+    display: block;
+    padding: .25rem .5rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all linear .2s;
+
+    &:active {
+        background: $gray-400;
+    }
+
+}
