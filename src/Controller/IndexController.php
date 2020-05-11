@@ -16,20 +16,23 @@ class IndexController extends AbstractController
     $this->fdserv = $fdserv;
   }
 
+
+  // data:
+  //   path:
+  //   html:
+  //     template:
+  //     data:
+  //     content:
+  //   styles:
+  //     template:
+  //     content:
+
+  /**
+   * @Route("/", name="index")
+   */
   public function index() {
 
-    // data:
-    //   path:
-    //   html:
-    //     template:
-    //     data:
-    //     content:
-    //   styles:
-    //     template:
-    //     content:
-
     $data = $this->fdserv->getData();
-    // dump($data);die();
 
     return $this->render('pages/index.html.twig', [
       'controller_name' => 'IndexController',
