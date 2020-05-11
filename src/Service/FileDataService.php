@@ -4,6 +4,7 @@ namespace App\Service;
 
 use Symfony\Component\Finder\Finder;
 use App\Service\ComponentDataService;
+use App\Entity\Component;
 
 class FileDataService {
 
@@ -44,9 +45,6 @@ class FileDataService {
         $this->output[$foldername]['styles']['content'] = $content;
       }
     }
-    // dump($componentData);
-    // dump($this->output);
-    // die();
   }
 
   public function getData() { 
@@ -57,6 +55,28 @@ class FileDataService {
     if(array_key_exists($comp, $this->output)){
       return $this->output[$comp];
     }
+  }
+
+  public function getComponent($pathname) {
+    if(array_key_exists($pathname, $this->output)){
+      $data = $this->output[$pathname];
+
+      $comp = new Component();
+
+      $comp->setPath($data['path']);
+      $comp->setHtmlTemplate($data['html']['template']);
+      $html_data = $data['html']['data'];
+      if(is_array($html_data)) {
+        $html_data_json = json_encode($html_data);
+        $comp->setHtmlData($html_data_json);
+      }
+      $comp->setHtmlContent($data['html']['content']);
+
+      $comp->setStylesTemplate($data['styles']['template']);
+      $comp->setStylesContent($data['styles']['content']);
+      return $comp;
+    }
+    return null;
   }
 
   // data:
