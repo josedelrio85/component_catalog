@@ -1,24 +1,22 @@
-{% extends 'base.html.twig' %}
+<div class="pt-0">
+  <div class="single-component">
+    <hr class="my-5">
+    <h2 class="h5 font-italic"> Template name </h2>
+    <span>{{component.html.template }}</span>
 
-{% block title %}New Component{% endblock %}
+    {% if component.html.data is not null %}
+      <div class="p-3 mt-4 border">
+        <div class="b-block py-3"></div>
+        <h2 class="h5 font-italic"> Preview </h2>
+        {% set content = include(component.html.template, { items: component.html.data}) %}
+        {{ content | raw}}
+      </div>
+    {% endif %}
 
-{% block body %}
-<style>
-  .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-  .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-  {# {{dump(form)}} #}
-  {# {{ form(form) }} #}
-  {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
-    {{ form_widget(form) }}
-  {{ form_end(form) }}
+    <pre class="code-block mb-4"><span class="copy-clipboard">Copy</span><code>{{component.html.content }}</code></pre>
+    
+    <h2 class="h5 font-italic"> Styles  </h2>
+    <span>{{component.styles.template }}</span>
+    <pre class="code-block mt-3"><span class="copy-clipboard">Copy</span><code>{{component.styles.content }}</code></pre>
+    </div>
 </div>
-{% endblock %}
-
-{% block javascripts %}
-  {{ parent() }}
-  {{ encore_entry_script_tags('component') }}
-{% endblock %}
-

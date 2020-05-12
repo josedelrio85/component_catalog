@@ -51,6 +51,10 @@ class FileDataService {
     return $this->output;
   }
 
+  public function getComponentsList() {
+    return array_keys($this->output);
+  }
+
   public function getDataFromComponent($comp) {
     if(array_key_exists($comp, $this->output)){
       return $this->output[$comp];

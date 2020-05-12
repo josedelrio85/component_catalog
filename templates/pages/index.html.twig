@@ -22,32 +22,23 @@
     </div>
   </div>
 
+  {# TODO component list should be a sidebar #}
   <div class="pt-0">
-    {% for key, component in data %}
+    {% for key, component in list %}
       <div class="single-component">
-        {# {{dump(component)}} #}
-        <hr class="my-5">
-        <h2 class="mb-4">{{key}}</h2>
-        <h2 class="h5 font-italic"> Template name </h2>
-        <span>{{component.html.template }}</span>
-
-        {% if component.html.data is not null %}
-          <div class="p-3 mt-4 border">
-            <div class="b-block py-3"></div>
-            <h2 class="h5 font-italic"> Preview </h2>
-            {% set content = include(component.html.template, { items: component.html.data}) %}
-            {{ content | raw}}
-          </div>
-        {% endif %}
-
-        {# <h2 class="h5 font-italic"> HTML code </h2> #}
-        <pre class="code-block mb-4"><span class="copy-clipboard">Copy</span><code>{{component.html.content }}</code></pre>
-        
-        <h2 class="h5 font-italic"> Styles  </h2>
-        <span>{{component.styles.template }}</span>
-        <pre class="code-block mt-3"><span class="copy-clipboard">Copy</span><code>{{component.styles.content }}</code></pre>
+        <a href="#" id="comp-{{key}}" data-name="{{component}}">{{component}}</a>
       </div>
     {% endfor %}
   </div>
 </div>
+
+{# TODO use the space between the search bar and sidebar to print the component asynchronous #}
+<div id="comp_async"></div>
+
+{% endblock %}
+
+
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('async') }}
 {% endblock %}

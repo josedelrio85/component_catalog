@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Finder\Finder;
 use App\Service\FileDataService;
 
@@ -16,27 +18,32 @@ class IndexController extends AbstractController
     $this->fdserv = $fdserv;
   }
 
-
-  // data:
-  //   path:
-  //   html:
-  //     template:
-  //     data:
-  //     content:
-  //   styles:
-  //     template:
-  //     content:
-
   /**
    * @Route("/", name="index")
    */
   public function index() {
 
-    $data = $this->fdserv->getData();
+    $list = $this->fdserv->getComponentsList();
 
     return $this->render('pages/index.html.twig', [
-      'controller_name' => 'IndexController',
-      'data' => $data,
+      'list' => $list,
     ]);
   }
+
+  /**
+   * @Route("/data-component", name="data-component")
+   */
+  public function dataComponent(Request $request) {
+    $compname = $request->get("compname");
+    $comp = $this->fdserv->getDataFromComponent($compname);
+    $template = $this->renderView('pages/component.html.twig', [
+      'component' => $comp,
+    ]);
+
+    return new JsonResponse([
+      'success' => true,
+      'template' => $template,
+    ]);
+  }
+
 }
