@@ -21,13 +21,6 @@ class ComponentController extends AbstractController
     }
 
     /**
-     * @Route("/component", name="component")
-     */
-    public function index() {
-      return $this->render('pages/index.html.twig', []);
-    }
-
-    /**
      * @Route("/component/change/{path}", name="component_change")
      */
     public function change(Request $request, string $path = null) {
