@@ -1,0 +1,17 @@
+.sidebar {
+    @include media-breakpoint-up(md) {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 5.5rem;
+        z-index: 1000;
+        height: calc(100vh - 7rem);
+    }
+
+
+
+
+    .single-component-list {
+        overflow-y: auto;
+        max-height: calc(100vh - 9rem);
+    }
+}
