@@ -1,4 +1,5 @@
 import { landingCommander } from '../../node_modules/@bysidecar/landing_commander/dist/main';
+import  './functions.js';
 
 document.addEventListener("DOMContentLoaded", (e) => {
   let components = document.querySelectorAll("[id^='comp-']");
@@ -13,6 +14,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
           let comp_async = document.getElementById('comp_async');
           comp_async.innerHTML = null;
           comp_async.insertAdjacentHTML('beforeend', result.template);
+          window.addCopyToClipboardEvent();
         }
       })
       .catch((error) => { console.log(error); });
