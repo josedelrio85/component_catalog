@@ -1,0 +1,11 @@
+<div class="sidebar col-md-3 col-xl-3">
+  {% include 'components/search-form/search-form.html.twig' %}
+  
+  <div class="single-component-list">
+    {% for key, component in list %}
+      <div class="single-component">
+        <a href="#" id="comp-{{key}}" data-name="{{component}}">{{component}}</a>
+      </div>
+    {% endfor %}
+  </div>
+</div>
