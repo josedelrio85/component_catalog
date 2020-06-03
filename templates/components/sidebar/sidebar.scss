@@ -7,11 +7,29 @@
         height: calc(100vh - 7rem);
     }
 
-
-
-
     .single-component-list {
         overflow-y: auto;
-        max-height: calc(100vh - 9rem);
+        max-height: 30vh;
+        border-top: 1px solid #eee;
+
+        @include media-breakpoint-up(md) {
+            max-height: calc(100vh - 9rem);
+        }
+
+        .single-component {
+            text-transform: lowercase;
+            margin-bottom: .5rem;
+            font-weight: 500;
+
+            &::first-letter {
+                text-transform: uppercase;
+            }
+
+            a {
+                &:hover {
+                    text-decoration: none;
+                }
+            }
+        }
     }
 }
