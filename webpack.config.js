@@ -20,6 +20,12 @@ Encore
         pattern: /\.(png|jpg|jpeg|pdf|svg)$/
       })
 
+      .copyFiles({
+        from: './assets/fonts',
+        to: 'fonts/[path][name].[ext]',
+        pattern: /\.(woff|woff2|ttf)$/
+      })
+
     /*
      * ENTRY CONFIG
      *
