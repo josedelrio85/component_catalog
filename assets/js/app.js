@@ -16,28 +16,8 @@ import  './functions.js';
 console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
 
 document.addEventListener("DOMContentLoaded", function (event) {
-
-    // Copy to clipboard
-    // function addCopyToClipboardEvent() {
-    //     document.querySelectorAll('.copy-clipboard').forEach(div => {
-    //         div.addEventListener('click', function() {
-
-    //             navigator.clipboard.writeText(this.nextSibling.innerText)
-    //             .then(() => {
-    //                 // Text copied to clipboard
-    //                 // console.log('Text copied to clipboard');
-    //             })
-    //             .catch(err => {
-    //             // If the user denies clipboard permissions:
-    //             console.error('Could not copy text: ', err);
-    //             });
-
-    //         });
-    //     });
-    // }
-
     window.addCopyToClipboardEvent();
-
+    window.addBackHomeEvent();
 });
 
 //Search on press search button

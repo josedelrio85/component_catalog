@@ -5,4 +5,8 @@
     width: 100%;
     box-shadow: $box-shadow-base;
     z-index: 999;
+
+    #btn-home {
+        cursor: pointer;
+    }
 }
