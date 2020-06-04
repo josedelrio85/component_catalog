@@ -26,9 +26,7 @@
 <h3>npm</h3>
 <p>Install Bootstrap in your Node.js powered apps with
 	<a href="https://www.npmjs.com/package/bootstrap">the npm package</a>:</p>
-<pre class="code-block mt-3 p-0"><span class="copy-clipboard">Copy</span><code>
-npm install bootstrap
-</code></pre>
+<pre class="code-block mt-3"><span class="copy-clipboard">Copy</span><code>npm install bootstrap</code></pre>
 <p>
 	<code class="highlighter-rouge">require('bootstrap')</code>
 	will load all of Bootstrap’s jQuery plugins onto the jQuery object. The
@@ -65,18 +63,18 @@ npm install bootstrap
 	<code class="highlighter-rouge">index.js</code>
 	or
 	<code class="highlighter-rouge">app.js</code>):</p>
-<pre class="code-block mt-3 p-0"><span class="copy-clipboard">Copy</span><code class="language-js" data-lang="js">
-@import "custom";
-@import "~bootstrap/scss/bootstrap";
+<pre class="code-block mt-3"><span class="copy-clipboard">Copy</span><code class="language-js" data-lang="js">import 'bootstrap/js/dist/util';
+import 'bootstrap/js/dist/alert';
+...
 </code></pre>
 <p>Bootstrap depends on
 	<a href="https://jquery.com/">jQuery</a>
 	and
 	<a href="https://popper.js.org/">Popper</a>,
-		which are specified in the
+				which are specified in the
 	<code class="highlighter-rouge">peerDependencies</code>
 	property; this means that you will have to make sure to add both of them
-	to your
+		to your
 	<code class="highlighter-rouge">package.json</code>
 	using
 	<code class="highlighter-rouge">npm install --save jquery popper.js</code>.</p>
@@ -90,17 +88,14 @@ npm install bootstrap
 	<code class="highlighter-rouge">_custom.scss</code>
 	and use it to override the
 	<a href="/docs/4.4/getting-started/theming/">built-in custom variables</a>. Then, use your main Sass file to import your custom variables, followed by Bootstrap:</p>
-<pre class="code-block mt-3 p-0"><span class="copy-clipboard">Copy</span><code class="language-js" data-lang="js">
-@import "custom";
-@import "~bootstrap/scss/bootstrap";
-</code></pre>
+<pre class="code-block mt-3"><span class="copy-clipboard">Copy</span><code>@import "custom";
+@import "~bootstrap/scss/bootstrap";</code></pre>
 <p>For Bootstrap to compile, make sure you install and use the required loaders:
 	<a href="https://github.com/webpack-contrib/sass-loader">sass-loader</a>,
 	<a href="https://github.com/postcss/postcss-loader">postcss-loader</a>
 	with
 	<a href="https://github.com/postcss/autoprefixer#webpack">Autoprefixer</a>. With minimal setup, your webpack config should include this rule or similar:</p>
-<pre class="code-block mt-3 p-0"><span class="copy-clipboard">Copy</span><code class="language-js" data-lang="js">
-...
+<pre class="code-block mt-3"><span class="copy-clipboard">Copy</span><code>...
 {
     test: /\.(scss)$/,
     use: [{
@@ -125,9 +120,7 @@ npm install bootstrap
 
 <h3>Importing Compiled CSS</h3>
 <p>Alternatively, you may use Bootstrap’s ready-to-use CSS by simply adding this line to your project’s entry point:</p>
-<pre class="code-block mt-3 p-0"><span class="copy-clipboard">Copy</span><code class="language-js" data-lang="js">
-import 'bootstrap/dist/css/bootstrap.min.css';
-</code></pre>
+<pre class="code-block mt-3"><span class="copy-clipboard">Copy</span><code>import 'bootstrap/dist/css/bootstrap.min.css';</code></pre>
 <p>In this case you may use your existing rule for
 	<code class="highlighter-rouge">css</code>
 	without any special modifications to webpack config, except you don’t need
@@ -136,8 +129,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 	<a href="https://github.com/webpack-contrib/style-loader">style-loader</a>
 	and
 	<a href="https://github.com/webpack-contrib/css-loader">css-loader</a>.</p>
-<pre class="code-block mt-3 p-0"><span class="copy-clipboard">Copy</span><code class="language-js" data-lang="js">
-...
+<pre class="code-block mt-3"><span class="copy-clipboard">Copy</span><code>...
 module: {
     rules: [
     {
