@@ -6,7 +6,35 @@
 
       {# Result #}
       <div class="col-md-9 col-xl-9 px-4 px-md-6 pt-5 pt-md-0">
-        <div id="comp_async"></div>
+        <div id="comp_async">
+
+          <div class="bg-primary p-4 mb-4 box-shadow-base">
+            <h1 class="text-white">Components catalog</h1>
+          </div>
+
+          <h2>Introduction</h2>
+          <p>Welcome to the <strong>Bysidecar</strong> component catalog! This version is based in <em>Bootstrap 4.4.1</em>. If you need some information about the framework, you can check this link: <a href="https://getbootstrap.com/docs/4.4/getting-started/introduction/" target="_blank">https://getbootstrap.com/docs/4.4/getting-started/introduction/</a></p>
+
+          <div class="mb-4"></div>
+
+          <h2>Installation</h2>
+          <p>Pull in Bootstrap’s <strong>source files</strong> into nearly any project with some of the most popular package managers. No matter the package manager, Bootstrap will <strong>require a Sass compiler and <a href="https://github.com/postcss/autoprefixer">Autoprefixer</a></strong> for a setup that matches our official compiled versions.</p>
+          
+          <div class="mb-4"></div>
+          <h2>npm</h2>
+          <p>Install Bootstrap in your Node.js powered apps with <a href="https://www.npmjs.com/package/bootstrap">the npm package</a>:</p>
+
+          <pre class="code-block mt-3 p-0"><span class="copy-clipboard">Copy</span><code>
+          npm install bootstrap
+          </code></pre>
+          <p><code class="highlighter-rouge">require('bootstrap')</code> will load all of Bootstrap’s jQuery plugins onto the jQuery object. The <code class="highlighter-rouge">bootstrap</code> module itself does not export anything. You can manually load Bootstrap’s jQuery plugins individually by loading the <code class="highlighter-rouge">/js/*.js</code> files under the package’s top-level directory.</p>
+          <p>Bootstrap’s <code class="highlighter-rouge">package.json</code> contains some additional metadata under the following keys:</p>
+          <ul>
+            <li><code class="highlighter-rouge">sass</code> - path to Bootstrap’s main <a href="https://sass-lang.com/">Sass</a> source file</li>
+            <li><code class="highlighter-rouge">style</code> - path to Bootstrap’s non-minified CSS that’s been precompiled using the default settings (no customization)</li>
+          </ul>
+          <p>Bootstrap is dependent on <a href="https://jquery.com/">jQuery</a> and <a href="https://popper.js.org/">Popper</a>, these are defined as <code class="highlighter-rouge">peerDependencies</code>, this means that you will have to make sure to add both of them to your <code class="highlighter-rouge">package.json</code> using <code class="highlighter-rouge">npm install --save jquery popper.js</code>.</p>
+        </div>
       </div>
     </div>
   </div>

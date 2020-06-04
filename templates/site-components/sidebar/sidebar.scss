@@ -1,5 +1,7 @@
 .sidebar {
+
     @include media-breakpoint-up(md) {
+        border-right: 1px solid $gray-300;
         position: -webkit-sticky;
         position: sticky;
         top: 5.5rem;
@@ -10,7 +12,7 @@
     .single-component-list {
         overflow-y: auto;
         max-height: 30vh;
-        border-top: 1px solid #eee;
+        border-top: 1px solid $gray-300;
 
         @include media-breakpoint-up(md) {
             max-height: calc(100vh - 9rem);
