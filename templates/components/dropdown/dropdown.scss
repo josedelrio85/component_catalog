@@ -1,7 +1,16 @@
+// Variables
+// $gray-100: #f8f9fa
+// $gray-300: #dee2e6
+// $primary: #c83200
+
 .dropdown {
 
+  .card {
+    border-radius: $dropdown-border-radius;
+  }
+
   .card-header {
-    background: #ffffff;
+    background: $gray-100;
     border-bottom: 0px;
   }
 
@@ -30,10 +39,10 @@
         /* Better Font Rendering =========== */
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
-        content: "\eb0f";
+        content: "\ea0b";
         float: right;
-        color: #0097D7;
-        font-size: 40px;
+        color: $primary;
+        font-size: 1rem;
         margin-left: 1rem;
       }
     }
@@ -41,15 +50,11 @@
   }
 
   .accordion .card-header.collapsed:after {
-    /* symbol for "collapsed" panels */
-    content: "\eb10";
+    content: "\ea0a";
   }
 
-  &.bg-grey,
-  &.bg-grey .card-header,
-  &.bg-grey .card-body,
-  &.bg-grey .dd-divider {
-    background: #FAFAFA;
+  .dd-divider {
+    border-top: 1px solid $gray-300 !important;
   }
 
 }

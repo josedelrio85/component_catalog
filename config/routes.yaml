@@ -1,4 +1,6 @@
 index:
    path: /
    controller: App\Controller\IndexController::index
-   
+component_change:
+   path: /component/change/{path}
+   controller: App\Controller\ComponentController::index

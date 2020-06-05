@@ -8,7 +8,7 @@
         <div id="accordion{{ accordionid }}" class="accordion">
           <div class="card mb-0">
             {% for item in dropdown_items %}
-              <div class="card-header collapsed d-flex justify-content-between py-3" data-toggle="collapse" href="#collapse{{ accordionid }}{{ loop.index }}">
+              <div class="card-header collapsed d-flex align-items-center justify-content-between py-3" data-toggle="collapse" href="#collapse{{ accordionid }}{{ loop.index }}">
                 <a class="card-title font-weight-bold h5 mb-0">{{ item.title | trans | raw}}</a>
               </div>
               <div class="card-body px-4 py-0">
@@ -18,7 +18,7 @@
                   {% endif %}
                 </div>
               </div>
-              <div class="border-top my-0 dd-divider"></div>
+              <div class="dd-divider"></div>
             {% endfor %}
           </div>
         </div>
