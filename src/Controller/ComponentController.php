@@ -40,7 +40,7 @@ class ComponentController extends AbstractController
           return $this->redirectToRoute('index');
         }
 
-        return $this->render('pages/component.html.twig', [
+        return $this->render('pages/component_change.html.twig', [
           'form' => $form->createView(),
         ]);
       }
@@ -62,7 +62,7 @@ class ComponentController extends AbstractController
           $this->ccserv->delete($comp);
           return $this->redirectToRoute('index');
         }
-        return $this->render('pages/component.html.twig', [
+        return $this->render('pages/component_change.html.twig', [
           'form' => $form->createView(),
         ]);
       }
