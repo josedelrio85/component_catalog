@@ -3,49 +3,42 @@
 {% block title %}Hello IndexController!{% endblock %}
 
 {% block body %}
-<div class="container py-5">
-  <h1>Hello {{ controller_name }}! ✅</h1>
 
-  This friendly message is coming from:
-  <ul>
-    <li>Your controller at <code><a href="{{ '/home/jose/Code/github.com/Bysidecar/comp_catalog/src/Controller/IndexController.php'|file_link(0) }}">src/Controller/IndexController.php</a></code></li>
-    <li>Your template at <code><a href="{{ '/home/jose/Code/github.com/Bysidecar/comp_catalog/templates/pages/index.html.twig'|file_link(0) }}">templates/pages/index.html.twig</a></code></li>
-  </ul>
+<div class="example-wrapper">
 
-  <div class="search-form">
-    <h2>Buscar...</h2>
-    <div class="input-group mb-3">
-      <input type="text" class="form-control" id="term-search" placeholder="Introduce tu búsqueda" aria-label="Introduce tu búsqueda" aria-describedby="basic-addon2">
-      <div class="input-group-append">
-        <button class="btn btn-outline-secondary" type="button" id="submit-search">🔍</button>
-      </div>
-    </div>
-  </div>
+  <div>
+    {% for key, component in data %}
 
-  {# TODO component list should be a sidebar #}
-  <div class="pt-0">
-    {% for key, component in list %}
-      <div class="single-component">
-        <a href="#" id="comp-{{key}}" data-name="{{component}}">{{component}}</a>
-      </div>
+      {# {{dump(component)}} #}
+      <h2>{{key}}</h2>
+
+      <h3> Template name </h3>
+
+      {{component.html.template }}
+      <br>----------------------- <br>
+
+
+      {% if component.html.data is not null %}
+        <h3> Preview </h3>
+
+        {% set content = include(component.html.template, { items: component.html.data}) %}
+        {{ content | raw}}
+        <br>----------------------- <br>
+      {% endif %}
+
+      <h3> HTML code </h3>
+
+      <pre><code>{{component.html.content }}</code></pre>
+      
+      <br>----------------------- <br>
+
+      <h3> CSS  </h3>
+
+      {{component.styles.template }}
+
+      <pre><code>{{component.styles.content }}</code></pre>
+      <br>----------------------- <br>
     {% endfor %}
   </div>
 </div>
-
-{# TODO use the space between the search bar and sidebar to print the component asynchronous #}
-<div id="comp_async"></div>
-
-  {# Main header #}
-  {% include 'site-components/header-main-section/header-main-section.html.twig' %}
-
-  {# Main container #}
-  {% include 'site-components/main-container/main-container.html.twig' %}
-
-
-{% endblock %}
-
-
-{% block javascripts %}
-  {{ parent() }}
-  {{ encore_entry_script_tags('async') }}
 {% endblock %}
