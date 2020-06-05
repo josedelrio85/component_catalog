@@ -4,41 +4,17 @@
 
 {% block body %}
 
-<div class="example-wrapper">
+  {# Main header #}
+  {% include 'site-components/header-main-section/header-main-section.html.twig' %}
 
-  <div>
-    {% for key, component in data %}
-
-      {# {{dump(component)}} #}
-      <h2>{{key}}</h2>
-
-      <h3> Template name </h3>
-
-      {{component.html.template }}
-      <br>----------------------- <br>
+  {# Main container #}
+  {% include 'site-components/main-container/main-container.html.twig' %}
 
 
-      {% if component.html.data is not null %}
-        <h3> Preview </h3>
+{% endblock %}
 
-        {% set content = include(component.html.template, { items: component.html.data}) %}
-        {{ content | raw}}
-        <br>----------------------- <br>
-      {% endif %}
 
-      <h3> HTML code </h3>
-
-      <pre><code>{{component.html.content }}</code></pre>
-      
-      <br>----------------------- <br>
-
-      <h3> CSS  </h3>
-
-      {{component.styles.template }}
-
-      <pre><code>{{component.styles.content }}</code></pre>
-      <br>----------------------- <br>
-    {% endfor %}
-  </div>
-</div>
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('async') }}
 {% endblock %}
