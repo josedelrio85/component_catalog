@@ -58,9 +58,11 @@ document.addEventListener('keyup', function (event) {
             if(!termsearch || components.item(i).innerHTML.search(termsearch) != -1) {
                 //Show element if string is in its content
                 components.item(i).classList.remove('d-none');
+                components.item(i).classList.add('d-flex');
             } else {
                 //Hide element if string is not in its content
                 components.item(i).classList.add('d-none');
+                components.item(i).classList.remove('d-flex');
             }
         }
     }
