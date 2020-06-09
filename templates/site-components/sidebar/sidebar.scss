@@ -1,6 +1,6 @@
 .sidebar {
 
-    @include media-breakpoint-up(md) {
+    @include media-breakpoint-up(lg) {
         border-right: 1px solid $gray-300;
         position: -webkit-sticky;
         position: sticky;
@@ -10,6 +10,7 @@
     }
 
     .single-component-list {
+        overflow-x: hidden;
         overflow-y: auto;
         max-height: 30vh;
         border-top: 1px solid $gray-300;
@@ -19,18 +20,23 @@
         }
 
         .single-component {
-            text-transform: lowercase;
             margin-bottom: .5rem;
             font-weight: 500;
 
-            &::first-letter {
-                text-transform: uppercase;
-            }
-
             a {
+                text-transform: lowercase;
+
+                &::first-letter {
+                    text-transform: uppercase;
+                }
+
                 &:hover {
                     text-decoration: none;
                 }
+            }
+
+            .edit-block {
+                width: 50px;
             }
         }
     }
