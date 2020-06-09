@@ -1,29 +1,38 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Component{% endblock %}
+{% block title %}{{title}}{% endblock %}
 
 {% block body %}
 
   {# Main header #}
   {% include 'site-components/header-main-section/header-main-section.html.twig' %}
 
-  <div class="edit-container container mt-6 py-4">
-    <div class="row">
+  {# Edit container #}
+  <div class="main-container container mt-6 py-4">
+      <div class="row">
 
-      {# Result #}
-      <div class="col-12 col-md-8 offset-md-2 px-4 px-md-6 pt-5 pt-md-0">
-      <div class="bg-primary p-4 mb-4 box-shadow-base">
-        <h1 class="text-white">Component menu</h1>
+        {# Sidebar #}
+        {% include 'site-components/sidebar/sidebar.html.twig' %}
+
+        {# Result #}
+        <div class="edit-container col-lg-9 px-4 px-lg-6 pt-5 pt-lg-0">
+          <div class="row">
+              {# Result #}
+              <div class="col-12">
+              <div class="bg-primary p-4 mb-4 box-shadow-base">
+                <h1 class="text-white">{{title}}</h1>
+                {# {{dump(form)}} #}
+              </div>
+                {# {{dump(form)}} #}
+                {# {{ form(form) }} #}
+                {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+                  {{ form_widget(form) }}
+                {{ form_end(form) }}
+              </div>
+          </div>
+        </div>
       </div>
-        {# {{dump(form)}} #}
-        {# {{ form(form) }} #}
-        {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
-          {{ form_widget(form) }}
-        {{ form_end(form) }}
-      </div>
-    </div>
   </div>
-
 {% endblock %}
 
 {% block javascripts %}

@@ -5,7 +5,7 @@
     position: relative;
 
     code {
-        font-family: 'Source Sans Pro', sans-serif;
+        font-family: $code-font;
         background-color: $gray-100;
         display: block;
         color: $gray-600;

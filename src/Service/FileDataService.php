@@ -71,7 +71,7 @@ class FileDataService {
       $comp->setHtmlTemplate($data['html']['template']);
       $html_data = $data['html']['data'];
       if(is_array($html_data)) {
-        $html_data_json = json_encode($html_data);
+        $html_data_json = json_encode($html_data, JSON_PRETTY_PRINT);
         $comp->setHtmlData($html_data_json);
       }
       $comp->setHtmlContent($data['html']['content']);
