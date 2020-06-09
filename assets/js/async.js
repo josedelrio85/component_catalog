@@ -2,6 +2,7 @@ import { landingCommander } from '../../node_modules/@bysidecar/landing_commande
 import  './functions.js';
 
 document.addEventListener("DOMContentLoaded", (e) => {
+
   let components = document.querySelectorAll("[id^='comp-']");
   components.forEach((cv, ci, listObj) => {
     cv.addEventListener('click', (event) => {
@@ -15,6 +16,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
           comp_async.innerHTML = null;
           comp_async.insertAdjacentHTML('beforeend', result.template);
           window.addCopyToClipboardEvent();
+          document.querySelector(".edit-container-block").classList.add('d-none');
         }
       })
       .catch((error) => { console.log(error); });
