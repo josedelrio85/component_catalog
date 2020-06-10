@@ -25,7 +25,7 @@ class ComponentController extends AbstractController
      */
     public function change(Request $request, string $path = null) {
       $list = $this->fdserv->getComponentsList();
-      $title = 'Edit component';
+      $title = 'Edit';
 
       if(is_null($path)) {
         $comp = new Component();
@@ -59,7 +59,7 @@ class ComponentController extends AbstractController
      */
     public function delete(Request $request, string $path = null) {
       $list = $this->fdserv->getComponentsList();
-      $title = 'Delete component';
+      $title = 'Delete';
       
       $comp = $this->fdserv->getComponent($path);
       if(!is_null($comp)){

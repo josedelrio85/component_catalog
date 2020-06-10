@@ -26,9 +26,9 @@
             a {
                 text-transform: lowercase;
 
-                &::first-letter {
-                    text-transform: uppercase;
-                }
+                // &::first-letter {
+                //     text-transform: uppercase;
+                // }
 
                 &:hover {
                     text-decoration: none;

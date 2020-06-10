@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{title}}{% endblock %}
+{% block title %}Bysidecar | {{title}} {{comp.path|split('\\')|last}}{% endblock %}
 
 {% block body %}
 
@@ -20,7 +20,7 @@
               {# Result #}
               <div class="col-12 edit-container-block">
                 <div class="bg-primary p-4 mb-4 box-shadow-base">
-                  <h1 class="text-white h3">{{title}} {{comp.path|split('components')|last}}</h1>
+                  <h1 class="text-white h3">{{title}} <em>{{comp.path|split('\\')|last}}</em></h1>
                   {# {{dump(comp.path)}} #}
                 </div>
                 {# {{dump(form)}} #}
