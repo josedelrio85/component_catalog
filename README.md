@@ -1,5 +1,9 @@
 # Component catalog web project
 
+List of components used along the differents Bysidecar's web projects. 
+
+The goal of this project is to have a kind of repository/catalog to have the capability of reuse this components.
+ 
 ## Installation
 
 ### Install Symfony CLI
