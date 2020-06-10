@@ -20,7 +20,9 @@ class ComponentType extends AbstractType
         'row_attr' => ['class' => 'text-editor', 'id' => 'html_template'],
         'attr' => ['readonly' => true],
       ])
-      ->add('html_data', TextareaType::class)
+      ->add('html_data', TextareaType::class, [
+        'label' => 'Html data (a YAML file)'
+      ])
       ->add('html_content', TextareaType::class)
       ->add('styles_template', TextType::class, [
         'row_attr' => ['class' => 'text-editor', 'id' => 'styles_template'],

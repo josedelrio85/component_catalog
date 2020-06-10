@@ -24,11 +24,15 @@ class ComponentController extends AbstractController
      * @Route("/component/change/{path}", name="component_change")
      */
     public function change(Request $request, string $path = null) {
+      $list = $this->fdserv->getComponentsList();
+      $title = 'Edit';
+
       if(is_null($path)) {
         $comp = new Component();
+        $title = 'Create component';
       } else {
         $comp = $this->fdserv->getComponent($path);
-      }
+      } 
 
       if(!is_null($comp)){
         $form = $this->createForm(ComponentType::class, $comp);
@@ -40,8 +44,11 @@ class ComponentController extends AbstractController
           return $this->redirectToRoute('index');
         }
 
-        return $this->render('pages/component.html.twig', [
-          'form' => $form->createView(),
+        return $this->render('pages/component_change.html.twig', [
+          'form'  => $form->createView(),
+          'list'  => $list,
+          'title' => $title,
+          'comp'  => $comp,
         ]);
       }
       throw $this->createNotFoundException('The component does not exist');
@@ -51,6 +58,9 @@ class ComponentController extends AbstractController
      * @Route("/component/delete/{path}", name="component_delete")
      */
     public function delete(Request $request, string $path = null) {
+      $list = $this->fdserv->getComponentsList();
+      $title = 'Delete';
+      
       $comp = $this->fdserv->getComponent($path);
       if(!is_null($comp)){
 
@@ -62,8 +72,11 @@ class ComponentController extends AbstractController
           $this->ccserv->delete($comp);
           return $this->redirectToRoute('index');
         }
-        return $this->render('pages/component.html.twig', [
+        return $this->render('pages/component_change.html.twig', [
           'form' => $form->createView(),
+          'list' => $list,
+          'title' => $title,
+          'comp'  => $comp,
         ]);
       }
       throw $this->createNotFoundException('The component does not exist');

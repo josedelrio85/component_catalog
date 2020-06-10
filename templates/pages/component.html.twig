@@ -1,22 +1,21 @@
 <div class="pt-0">
   <div class="single-component">
-    <hr class="my-5">
-    <h2 class="h5 font-italic"> Template name </h2>
-    <span>{{component.html.template }}</span>
+    <h2 class="h1">Template name</h2>
+    <span class="name-container w-100 d-block bg-light p-2 font-italic overflow-auto d-block mt-3">{{component.html.template }}</span>
 
     {% if component.html.data is not null %}
-      <div class="p-3 mt-4 border">
-        <div class="b-block py-3"></div>
+      <div class="py-3">
+        <div class="b-block py-1"></div>
         <h2 class="h5 font-italic"> Preview </h2>
         {% set content = include(component.html.template, { items: component.html.data}) %}
         {{ content | raw}}
       </div>
     {% endif %}
 
-    <pre class="code-block mb-4"><span class="copy-clipboard">Copy</span><code>{{component.html.content }}</code></pre>
+    <pre class="code-block mb-5"><span class="copy-clipboard">Copy</span><code>{{component.html.content }}</code></pre>
     
-    <h2 class="h5 font-italic"> Styles  </h2>
-    <span>{{component.styles.template }}</span>
+    <h2 class="h1">Styles</h2>
+    <span class="name-container w-100 d-block bg-light p-2 font-italic overflow-auto d-block mt-3">{{component.styles.template }}</span>
     <pre class="code-block mt-3"><span class="copy-clipboard">Copy</span><code>{{component.styles.content }}</code></pre>
     </div>
 </div>

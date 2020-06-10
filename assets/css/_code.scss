@@ -1,15 +1,15 @@
 .code-block {
     white-space: pre-wrap;
     background: $gray-100;
-    padding: 20px;
+    padding: 1.5rem;
     position: relative;
 
     code {
-        font-family: 'Source Sans Pro', sans-serif;
+        font-family: $code-font;
         background-color: $gray-100;
         display: block;
         color: $gray-600;
-        font-size: $font-size-base;
+        font-size: $code-font-size;
     }
 }
 

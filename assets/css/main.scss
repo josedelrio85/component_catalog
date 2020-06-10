@@ -1,5 +1,7 @@
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap');
+// @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200;0,300;0,400;1,200;1,300;1,400&display=swap');
+@import "fonts/icomoon";
 
 // Overwrite and create variables, maps, etc.
 @import "custom";
@@ -49,3 +51,12 @@
 
 // Custom elements
 @import "code";
+@import "display";
+
+// Components
+@import "../../templates/site-components/header-main-section/header-main-section.scss";
+@import "../../templates/site-components/sidebar/sidebar.scss";
+@import "../../templates/components/dropdown/dropdown.scss";
+
+// Pages
+@import "../../templates/pages/component_change.scss";

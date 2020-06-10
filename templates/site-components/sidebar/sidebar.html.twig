@@ -1,0 +1,23 @@
+<div class="sidebar col-lg-3">
+
+  {% include 'site-components/search-form/search-form.html.twig' %}
+
+  <div class="edit-button-container text-right">
+    <a class="btn btn-primary d-block d-sm-inline-block d-lg-block" href="{{ path('component_change') }}" role="button">
+      <span class="icon icon-folder-plus mr-2"></span> Create component
+    </a>
+  </div>
+
+  <div class="single-component-list mt-4 px-3 py-3">
+    {% for key, component in list %}
+      <div class="single-component d-flex justify-content-between">
+        <a href="#" id="comp-{{key}}" data-name="{{component}}">{{component}}</a>
+        <div class="edit-block d-flex justify-content-end">
+          <a href="{{ path('component_change', {path: component}) }}" class="icon icon-pencil text-primary mr-2"></a>
+          <a href="{{ path('component_delete', {path: component}) }}" class="icon icon-cross text-primary"></a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+</div>

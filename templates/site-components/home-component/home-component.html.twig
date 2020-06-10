@@ -1,0 +1,142 @@
+<div class="bg-primary p-4 mb-4 box-shadow-base">
+	<h1 class="text-white">Components catalog</h1>
+</div>
+
+<h2>Introduction</h2>
+<p>Welcome to the
+	<strong>Bysidecar</strong>
+	component catalog! This version is based in
+	<em>Bootstrap 4.4.1</em>. If you need some information about the framework, you can check this link:
+	<a href="https://getbootstrap.com/docs/4.4/getting-started/introduction/" target="_blank">https://getbootstrap.com/docs/4.4/getting-started/introduction/</a>
+</p>
+
+<div class="mb-4"></div>
+
+<h2>Installation</h2>
+<p>Pull in Bootstrap’s
+	<strong>source files</strong>
+	into nearly any project with some of the most popular package managers. No matter the package manager, Bootstrap will
+	<strong>require a Sass compiler and
+		<a href="https://github.com/postcss/autoprefixer">Autoprefixer</a>
+	</strong>
+	for a setup that matches our official compiled versions.</p>
+
+<div class="mb-4"></div>
+
+<h3>npm</h3>
+<p>Install Bootstrap in your Node.js powered apps with
+	<a href="https://www.npmjs.com/package/bootstrap">the npm package</a>:</p>
+<pre class="code-block mt-3"><span class="copy-clipboard">Copy</span><code>npm install bootstrap</code></pre>
+<p>
+	<code class="highlighter-rouge">require('bootstrap')</code>
+	will load all of Bootstrap’s jQuery plugins onto the jQuery object. The
+	<code class="highlighter-rouge">bootstrap</code>
+	module itself does not export anything. You can manually load Bootstrap’s jQuery plugins individually by loading the
+	<code class="highlighter-rouge">/js/*.js</code>
+	files under the package’s top-level directory.</p>
+<p>Bootstrap’s
+	<code class="highlighter-rouge">package.json</code>
+	contains some additional metadata under the following keys:</p>
+<ul>
+	<li>
+		<code class="highlighter-rouge">sass</code>
+		- path to Bootstrap’s main
+		<a href="https://sass-lang.com/">Sass</a>
+		source file</li>
+	<li>
+		<code class="highlighter-rouge">style</code>
+		- path to Bootstrap’s non-minified CSS that’s been precompiled using the default settings (no customization)</li>
+</ul>
+<p>Bootstrap is dependent on
+	<a href="https://jquery.com/">jQuery</a>
+	and
+	<a href="https://popper.js.org/">Popper</a>, these are defined as
+	<code class="highlighter-rouge">peerDependencies</code>, this means that you will have to make sure to add both of them to your
+	<code class="highlighter-rouge">package.json</code>
+	using
+	<code class="highlighter-rouge">npm install --save jquery popper.js</code>.</p>
+
+<h2>Importing JavaScript</h2>
+<p>Import
+	<a href="/docs/4.4/getting-started/javascript/">Bootstrap’s JavaScript</a>
+	by adding this line to your app’s entry point (usually
+	<code class="highlighter-rouge">index.js</code>
+	or
+	<code class="highlighter-rouge">app.js</code>):</p>
+<pre class="code-block mt-3"><span class="copy-clipboard">Copy</span><code class="language-js" data-lang="js">import 'bootstrap/js/dist/util';
+import 'bootstrap/js/dist/alert';
+...
+</code></pre>
+<p>Bootstrap depends on
+	<a href="https://jquery.com/">jQuery</a>
+	and
+	<a href="https://popper.js.org/">Popper</a>,
+				which are specified in the
+	<code class="highlighter-rouge">peerDependencies</code>
+	property; this means that you will have to make sure to add both of them
+		to your
+	<code class="highlighter-rouge">package.json</code>
+	using
+	<code class="highlighter-rouge">npm install --save jquery popper.js</code>.</p>
+
+<div class="mb-4"></div>
+
+<h2>Importing Styles</h2>
+<h3>Importing Precompiled Sass</h3>
+<p>To enjoy the full potential of Bootstrap and customize it to your needs, use the source files as a part of your project’s bundling process.</p>
+<p>First, create your own
+	<code class="highlighter-rouge">_custom.scss</code>
+	and use it to override the
+	<a href="/docs/4.4/getting-started/theming/">built-in custom variables</a>. Then, use your main Sass file to import your custom variables, followed by Bootstrap:</p>
+<pre class="code-block mt-3"><span class="copy-clipboard">Copy</span><code>@import "custom";
+@import "~bootstrap/scss/bootstrap";</code></pre>
+<p>For Bootstrap to compile, make sure you install and use the required loaders:
+	<a href="https://github.com/webpack-contrib/sass-loader">sass-loader</a>,
+	<a href="https://github.com/postcss/postcss-loader">postcss-loader</a>
+	with
+	<a href="https://github.com/postcss/autoprefixer#webpack">Autoprefixer</a>. With minimal setup, your webpack config should include this rule or similar:</p>
+<pre class="code-block mt-3"><span class="copy-clipboard">Copy</span><code>...
+{
+    test: /\.(scss)$/,
+    use: [{
+    loader: 'style-loader', // inject CSS to page
+    }, {
+    loader: 'css-loader', // translates CSS into CommonJS modules
+    }, {
+    loader: 'postcss-loader', // Run postcss actions
+    options: {
+        plugins: function () { // postcss plugins, can be exported to postcss.config.js
+        return [
+            require('autoprefixer')
+        ];
+        }
+    }
+    }, {
+    loader: 'sass-loader' // compiles Sass to CSS
+    }]
+},
+...
+</code></pre>
+
+<h3>Importing Compiled CSS</h3>
+<p>Alternatively, you may use Bootstrap’s ready-to-use CSS by simply adding this line to your project’s entry point:</p>
+<pre class="code-block mt-3"><span class="copy-clipboard">Copy</span><code>import 'bootstrap/dist/css/bootstrap.min.css';</code></pre>
+<p>In this case you may use your existing rule for
+	<code class="highlighter-rouge">css</code>
+	without any special modifications to webpack config, except you don’t need
+	<code class="highlighter-rouge">sass-loader</code>
+	just
+	<a href="https://github.com/webpack-contrib/style-loader">style-loader</a>
+	and
+	<a href="https://github.com/webpack-contrib/css-loader">css-loader</a>.</p>
+<pre class="code-block mt-3"><span class="copy-clipboard">Copy</span><code>...
+module: {
+    rules: [
+    {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
+    }
+    ]
+}
+...
+</code></pre>

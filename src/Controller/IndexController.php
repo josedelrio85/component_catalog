@@ -24,9 +24,12 @@ class IndexController extends AbstractController
   public function index() {
 
     $list = $this->fdserv->getComponentsList();
+    $data = $this->fdserv->getData();
 
     return $this->render('pages/index.html.twig', [
+      'controller_name' => 'IndexController',
       'list' => $list,
+      'data' => $data,
     ]);
   }
 
