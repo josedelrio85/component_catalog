@@ -1,0 +1,33 @@
+version: 2
+jobs:
+  build:
+    machine: true
+    #branches: 
+      #only: 
+        #- master
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          working_directory: /
+          command: |
+            # install awscli to interact with Bysidecar's AWS resources
+            sudo apt-get -y -qq update
+            sudo apt-get -y install awscli
+      - run:
+          name: Set convenience environment variables
+          command: |
+            # set the AWS ECR Image name for the build
+            echo 'export IMAGE_COMMIT="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${ECR_REPOSITORY}:${CIRCLE_SHA1}"' >> $BASH_ENV
+            echo 'export IMAGE_LATEST="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${ECR_REPOSITORY}:latest"'         >> $BASH_ENV
+      - run:
+          name: Build image
+          command: |
+            eval $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
+            docker build -t $IMAGE_COMMIT .
+            docker tag $IMAGE_COMMIT $IMAGE_LATEST
+      - run:
+          name: Push image
+          command: |
+            docker push $IMAGE_COMMIT
+            docker push $IMAGE_LATEST
