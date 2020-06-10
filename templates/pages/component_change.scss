@@ -16,6 +16,11 @@
         min-height: 250px;
     }
 
+    #component_html_content,
+    #component_styles_content {
+        min-height: 400px;
+    }
+
     label {
         font-weight: bold;
         color: #666;
