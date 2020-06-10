@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Service\ComponentCreatorService;
 use App\Service\FileDataService;
 use App\Entity\Component;
-use App\Form\Type\ComponentType;
+use App\Form\ComponentType;
 
 class ComponentController extends AbstractController
 {
