@@ -32,7 +32,7 @@ RUN composer install \
   && composer dump-env prod \
   && php bin/console cache:warmup 
 
-RUN rm .env.local
+#RUN rm .env.local
 
 # Add supervisord configuration to run both nginx and fpm.
 ADD ./ci/conf/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
