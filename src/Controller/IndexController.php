@@ -23,6 +23,16 @@ class IndexController extends AbstractController
    */
   public function index() {
 
+    $test = $this->getParameter('test');
+    $leads_url = $this->getParameter('leads_url');
+    $app_env = $this->getParameter('app_env');
+
+    $probas = [
+      'test' => $test,
+      'leads_url' => $leads_url,
+      'app_env' => $app_env,
+    ];
+
     $list = $this->fdserv->getComponentsList();
     $data = $this->fdserv->getData();
 
@@ -30,6 +40,7 @@ class IndexController extends AbstractController
       'controller_name' => 'IndexController',
       'list' => $list,
       'data' => $data,
+      'probas' => $probas,
     ]);
   }
 
