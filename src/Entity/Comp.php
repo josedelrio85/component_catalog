@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\CompRepository;
 use Doctrine\ORM\Mapping as ORM;
+// use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=CompRepository::class)
@@ -99,17 +100,15 @@ class Comp
         return $this;
     }
 
-    public function getHtmlData(): ?string
-    {
-        $data = json_encode($this->html_data, JSON_PRETTY_PRINT);
 
-        return $data;
+    public function getHtmlData()
+    {
+        return $this->html_data;
     }
 
-    public function setHtmlData(?string $html_data): self
+    public function setHtmlData($html_data): self
     {
-        $this->html_data = $html_data;
-
+        $this->html_data = json_decode($html_data, JSON_PRETTY_PRINT);
         return $this;
     }
 

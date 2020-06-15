@@ -2,94 +2,59 @@
 
 namespace App\Service;
 
-use Symfony\Component\Finder\Finder;
-use App\Service\ComponentDataService;
-use App\Entity\Component;
+// use Symfony\Component\Finder\Finder;
+use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
+use Symfony\Component\Filesystem\Filesystem;
+use App\Entity\Comp;
 
 class FileDataService {
 
   private $rootPath;
-  private $compS;
-  private $output;
+  private $filesystem;
 
-  public function __construct(string $rootPath, ComponentDataService $compS) {
-    $this->rootPath = $rootPath;
-    $this->compS = $compS;
+
+  public function __construct(string $rootPath) {
     $basedir = $rootPath .DIRECTORY_SEPARATOR.'templates';
-    $folder = 'components';
-    $components = $basedir.DIRECTORY_SEPARATOR.$folder;
+    $folder = 'helper';
+    $path = $basedir.DIRECTORY_SEPARATOR.$folder;
 
-    $componentData = $this->compS->getComponentData();
-    $this->output = [];
+    $helper = [
+      'rootPath' => $rootPath,
+      'basedir' => $basedir,
+      'folder' => $folder,
+      'path' => $path,
+    ];
 
-    $finder = new Finder();
-    $iterator  = $finder->files()->in($components);
-    foreach($iterator as $file){
-      $filepath = $file->getRealpath();
-      $pathinfo = pathinfo($filepath);
+    $this->helper = $helper;
+    $this->filesystem = new Filesystem();
+  }
 
-      $dirname = explode(DIRECTORY_SEPARATOR, $pathinfo['dirname']);
-      $foldername = end($dirname);
-      $content = file_get_contents($filepath);
+  public function createTemplate(Comp $comp) {
+    $info = [];
 
-      $path = $folder.DIRECTORY_SEPARATOR.$foldername;
-      $template = $path.DIRECTORY_SEPARATOR.$pathinfo['basename'];
-
-      $this->output[$foldername]['path'] = $path;
-      if($pathinfo['extension'] != 'scss') {
-        $this->output[$foldername]['html']['template'] = $template;
-        $this->output[$foldername]['html']['data'] = array_key_exists($foldername, $componentData) ? $componentData[$foldername] : null;
-        $this->output[$foldername]['html']['content'] = $content;
-      } else {
-        $this->output[$foldername]['styles']['template'] = $template;
-        $this->output[$foldername]['styles']['content'] = $content;
-      }
+    $rand = $this->generateRandomString();
+    $template = $this->helper['path'].DIRECTORY_SEPARATOR.$rand.'.html.twig';
+    try {
+      $this->filesystem->dumpFile($template, $comp->getHtmlContent());
+    }catch(IOException $e){
+      dump($e);
     }
-  }
 
-  public function getData() { 
-    return $this->output;
-  }
-
-  public function getComponentsList() {
-    return array_keys($this->output);
-  }
-
-  public function getDataFromComponent($comp) {
-    if(array_key_exists($comp, $this->output)){
-      return $this->output[$comp];
+    $style = $this->helper['path'].DIRECTORY_SEPARATOR.$rand.'.scss';
+    try {
+      $this->filesystem->dumpFile($style, $comp->getStylesContent());
+    }catch(IOException $e){
+      dump($e);
     }
+
+    $info = [
+      'template' =>  $this->helper['folder'].DIRECTORY_SEPARATOR.$rand.'.html.twig',
+      'style' =>  $this->helper['folder'].DIRECTORY_SEPARATOR.$rand.'.scss',
+    ];
+    return $info;
   }
 
-  public function getComponent($pathname) {
-    if(array_key_exists($pathname, $this->output)){
-      $data = $this->output[$pathname];
-
-      $comp = new Component();
-
-      $comp->setPath($data['path']);
-      $comp->setHtmlTemplate($data['html']['template']);
-      $html_data = $data['html']['data'];
-      if(is_array($html_data)) {
-        $html_data_json = json_encode($html_data, JSON_PRETTY_PRINT);
-        $comp->setHtmlData($html_data_json);
-      }
-      $comp->setHtmlContent($data['html']['content']);
-
-      $comp->setStylesTemplate($data['styles']['template']);
-      $comp->setStylesContent($data['styles']['content']);
-      return $comp;
-    }
-    return null;
+  function generateRandomString($length = 10) {
+    return substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length);
   }
-
-  // data:
-  //   path:
-  //   html:
-  //     template:
-  //     data:
-  //     content:
-  //   styles:
-  //     template:
-  //     content:
 }

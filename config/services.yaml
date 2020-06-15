@@ -26,18 +26,8 @@ services:
   App\Controller\:
     resource: "../src/Controller"
     tags: ["controller.service_arguments"]
-
-  App\Service\ComponentDataService:
-    public: true
-    class: App\Service\ComponentDataService
-    arguments: ["%kernel.project_dir%"]
-
+  
   App\Service\FileDataService:
     public: true
     class: App\Service\FileDataService
-    arguments: ["%kernel.project_dir%"]
-
-  App\Service\ComponentCreatorService:
-    public: true
-    class: App\Service\ComponentCreatorService
     arguments: ["%kernel.project_dir%"]

@@ -1,0 +1,30 @@
+<div class="pt-0">
+  <div class="single-component">
+    <h2 class="h1">{{component.name}}</h2>
+    {# <span class="name-container w-100 d-block bg-light p-2 font-italic overflow-auto d-block mt-3">
+      {{component.htmltemplate }}
+    </span> #}
+
+    {% if component.htmldata is not null and template is not null %}
+      <div class="py-3">
+        <div class="b-block py-1"></div>
+        <h2 class="h5 font-italic"> Preview </h2>
+        {% set content = include(template, { items: data}) %}
+        {{ content | raw}}
+      </div>
+    {% endif %}
+
+    <h2 class="h5 font-italic"> HTML </h2>
+    <pre class="code-block mb-5"><span class="copy-clipboard">Copy</span>
+    <code>{{component.htmlcontent }}</code>
+    </pre>
+    
+    <h2 class="h5 font-italic"> Styles </h2>
+    {# <span class="name-container w-100 d-block bg-light p-2 font-italic overflow-auto d-block mt-3">
+    {{component.stylestemplate }}
+    </span> #}
+    <pre class="code-block mt-3"><span class="copy-clipboard">Copy</span>
+    <code>{{component.stylescontent }}</code>
+    </pre>
+  </div>
+</div>

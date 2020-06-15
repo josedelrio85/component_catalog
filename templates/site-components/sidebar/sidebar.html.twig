@@ -11,7 +11,7 @@
   <div class="single-component-list mt-4 px-3 py-3">
     {% for key, component in list %}
       <div class="single-component d-flex justify-content-between">
-        <a href="#" id="comp-{{key}}" data-name="{{component.name}}">{{component.name}}</a>
+        <a href="#" id="comp-{{key}}" data-id="{{component.id}}">{{component.name}}</a>
         <div class="edit-block d-flex justify-content-end">
           <a href="{{ path('component_edit', {id: component.id}) }}" class="icon icon-pencil text-primary mr-2"></a>
           <a href="{{ path('component_delete', {id: component.id}) }}" class="icon icon-cross text-primary"></a>
