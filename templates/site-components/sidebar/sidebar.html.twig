@@ -2,20 +2,24 @@
 
   {% include 'site-components/search-form/search-form.html.twig' %}
 
-  <div class="edit-button-container text-right">
-    <a class="btn btn-primary d-block d-sm-inline-block d-lg-block" href="{{ path('component_create') }}" role="button">
-      <span class="icon icon-folder-plus mr-2"></span> Create component
-    </a>
-  </div>
+  {% if is_granted('ROLE_ADMIN') %}
+    <div class="edit-button-container text-right">
+      <a class="btn btn-primary d-block d-sm-inline-block d-lg-block" href="{{ path('component_create') }}" role="button">
+        <span class="icon icon-folder-plus mr-2"></span> Create component
+      </a>
+    </div>
+  {% endif %}
 
   <div class="single-component-list mt-4 px-3 py-3">
     {% for key, component in list %}
       <div class="single-component d-flex justify-content-between">
         <a href="#" id="comp-{{key}}" data-id="{{component.id}}">{{component.name}}</a>
-        <div class="edit-block d-flex justify-content-end">
-          <a href="{{ path('component_edit', {id: component.id}) }}" class="icon icon-pencil text-primary mr-2"></a>
-          <a href="{{ path('component_delete', {id: component.id}) }}" class="icon icon-cross text-primary"></a>
-        </div>
+        {% if is_granted('ROLE_ADMIN') %}
+          <div class="edit-block d-flex justify-content-end">
+            <a href="{{ path('component_edit', {id: component.id}) }}" class="icon icon-pencil text-primary mr-2"></a>
+            <a href="{{ path('component_delete', {id: component.id}) }}" class="icon icon-cross text-primary"></a>
+          </div>
+        {% endif %}
       </div>
     {% endfor %}
   </div>

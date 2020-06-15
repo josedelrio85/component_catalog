@@ -6,6 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+
 use App\Form\ComponentType;
 use App\Entity\Comp;
 use App\Service\FileDataService;
@@ -32,6 +34,9 @@ class ComponentController extends AbstractController
 
   /**
    * @Route("/component_edit/{id}", name="component_edit")
+   * 
+   * @Security("is_granted('ROLE_ADMIN')")
+   * 
    */
   public function edit(Request $request, int $id)
   {
@@ -63,6 +68,9 @@ class ComponentController extends AbstractController
 
   /**
    * @Route("/component_create/", name="component_create")
+   * 
+   * @Security("is_granted('ROLE_ADMIN')")
+   * 
    */
   public function create(Request $request)
   {
@@ -92,6 +100,9 @@ class ComponentController extends AbstractController
 
   /**
    * @Route("/component_delete/{id}", name="component_delete")
+   * 
+   * @Security("is_granted('ROLE_ADMIN')")
+   * 
    */
   public function delete(Request $request, int $id)
   {
