@@ -25,7 +25,7 @@ class ComponentController extends AbstractController
   {
     $components = $this->getDoctrine()->getRepository(Comp::class)->findAll();
 
-    return $this->render('component/index.html.twig', [
+    return $this->render('site-components/index.html.twig', [
       'list' => $components,
     ]);
   }
@@ -137,11 +137,6 @@ class ComponentController extends AbstractController
     }
     
     $output = $this->fds->createTemplate($comp);
-
-    // dump($comp);
-    // dump($comp->getHtmlData());die();
-    // dump($output['template']);
-
     $template = $this->renderView('component/component.html.twig', [
       'component' => $comp,
       'template' => $output['template'],
