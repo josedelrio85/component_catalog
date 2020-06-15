@@ -5,80 +5,112 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-use App\Service\ComponentCreatorService;
-use App\Service\FileDataService;
-use App\Entity\Component;
 use App\Form\ComponentType;
+use App\Entity\Comp;
 
 class ComponentController extends AbstractController
 {
-    private $ccserv;
-    private $fdserv;
+    /**
+     * @Route("/component", name="component")
+     */
+    public function index()
+    {
+        $components = $this->getDoctrine()->getRepository(Comp::class)->findAll();
 
-    public function __construct(ComponentCreatorService $ccserv, FileDataService $fdserv) {
-      $this->ccserv = $ccserv;
-      $this->fdserv = $fdserv;
+        return $this->render('component/index.html.twig', [
+            'list' => $components,
+        ]);
     }
 
     /**
-     * @Route("/component/change/{path}", name="component_change")
+     * @Route("/component_edit/{id}", name="component_edit")
      */
-    public function change(Request $request, string $path = null) {
-      $list = $this->fdserv->getComponentsList();
-      $title = 'Edit';
+    public function edit(Request $request, int $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $components = $em->getRepository(Comp::class)->findAll();
 
-      if(is_null($path)) {
-        $comp = new Component();
+        $comp = $em->getRepository(Comp::class)->find($id);
+        if(!$comp){
+            throw $this->creatNotFoundException('The component '.$id.' does not exists');
+        }
+
+        $form = $this->createForm(ComponentType::class, $comp);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()){
+            $em->flush();
+            return $this->redirectToRoute('component');
+        }
+
+        $title = "Edit";
+
+        return $this->render('component/change.html.twig', [
+            'list' => $components,
+            'title' => $title,
+            'comp'  => $comp,
+            'form'  => $form->createView(),
+        ]);
+    }
+
+
+     /**
+     * @Route("/component_create/", name="component_create")
+     */
+    public function create(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $components = $em->getRepository(Comp::class)->findAll();
+
+        $comp = new Comp();
+        $form = $this->createForm(ComponentType::class, $comp);
         $title = 'Create component';
-      } else {
-        $comp = $this->fdserv->getComponent($path);
-      } 
-
-      if(!is_null($comp)){
-        $form = $this->createForm(ComponentType::class, $comp);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()){
-          $comp = $form->getData();
-          $this->ccserv->create($comp);
-          return $this->redirectToRoute('index');
+            // die(dump($form->getData()));
+            // $comp = $form->getData();
+            $em->persist($form->getData());
+            $em->flush();
+            return $this->redirectToRoute('component');
         }
 
-        return $this->render('pages/component_change.html.twig', [
-          'form'  => $form->createView(),
-          'list'  => $list,
-          'title' => $title,
-          'comp'  => $comp,
+        return $this->render('component/change.html.twig', [
+            'list' => $components,
+            'title' => $title,
+            'comp'  => $comp,
+            'form'  => $form->createView(),
         ]);
-      }
-      throw $this->createNotFoundException('The component does not exist');
     }
 
     /**
-     * @Route("/component/delete/{path}", name="component_delete")
+     * @Route("/component_delete/{id}", name="component_delete")
      */
-    public function delete(Request $request, string $path = null) {
-      $list = $this->fdserv->getComponentsList();
-      $title = 'Delete';
-      
-      $comp = $this->fdserv->getComponent($path);
-      if(!is_null($comp)){
+    public function delete(Request $request, int $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $components = $em->getRepository(Comp::class)->findAll();
+
+        $comp = $em->getRepository(Comp::class)->find($id);
+        if(!$comp){
+            throw $this->creatNotFoundException('The component '.$id.' does not exists');
+        }
 
         $form = $this->createForm(ComponentType::class, $comp);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()){
-          $comp = $form->getData();
-          $this->ccserv->delete($comp);
-          return $this->redirectToRoute('index');
+            $em->remove($form->getData());
+            $em->flush();
+            return $this->redirectToRoute('component');
         }
-        return $this->render('pages/component_change.html.twig', [
-          'form' => $form->createView(),
-          'list' => $list,
-          'title' => $title,
-          'comp'  => $comp,
+        $title = "Delete";
+
+        return $this->render('component/change.html.twig', [
+            'list' => $components,
+            'title' => $title,
+            'comp'  => $comp,
+            'form'  => $form->createView(),
         ]);
-      }
-      throw $this->createNotFoundException('The component does not exist');
     }
 }
