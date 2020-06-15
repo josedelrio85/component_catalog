@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bysidecar | Components catalog{% endblock %}
+
+{% block body %}
+
+  {# Main header #}
+  {% include 'site-components/header-main-section/header-main-section.html.twig' %}
+
+  {# Main container #}
+  {% include 'site-components/main-container/main-container.html.twig' %}
+
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  {# {{ encore_entry_script_tags('async') }} #}
+{% endblock %}

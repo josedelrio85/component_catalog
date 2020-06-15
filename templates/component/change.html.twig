@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bysidecar | {{title}} {{comp.path|split('\\')|last}}{% endblock %}
+
+{% block body %}
+
+  {# Main header #}
+  {% include 'site-components/header-main-section/header-main-section.html.twig' %}
+
+  {# Edit container #}
+  <div class="main-container container mt-6 py-4">
+      <div class="row">
+
+        {# Sidebar #}
+        {% include 'site-components/sidebar/sidebar.html.twig' %}
+
+        {# Result #}
+        <div class="edit-container col-lg-9 px-4 px-lg-6 pt-5 pt-lg-0">
+          <div class="row">
+              {# Result #}
+              <div class="col-12 edit-container-block">
+                <div class="bg-primary p-4 mb-4 box-shadow-base">
+                  <h1 class="text-white h3">{{title}} <em>{{comp.name}}</em></h1>
+                </div>
+                {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+                  {{ form_widget(form) }}
+                {{ form_end(form) }}
+              </div>
+              <div id="comp_async" class="col-12"></div>
+          </div>
+        </div>
+      </div>
+  </div>
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('component') }}
+  {{ encore_entry_script_tags('async') }}
+{% endblock %}
