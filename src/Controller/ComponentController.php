@@ -91,6 +91,9 @@ class ComponentController extends AbstractController
     if ($form->isSubmitted() && $form->isValid()){
         $em->persist($form->getData());
         $em->flush();
+
+        $output = $this->fds->createTemplate($comp);
+
         return $this->redirectToRoute('component');
     }
 
@@ -180,7 +183,6 @@ class ComponentController extends AbstractController
       ]);
     }
     
-    // $output = $this->fds->createTemplate($comp);
     $template = $this->renderView('site-components/sidebar-child/sidebar-child.html.twig', [
       'list' => $list,
     ]);

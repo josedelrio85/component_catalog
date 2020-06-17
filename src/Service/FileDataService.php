@@ -7,12 +7,16 @@ use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use App\Entity\Comp;
 
+use Symfony\Component\Process\Exception\ProcessFailedException;
+use Symfony\Component\Process\Process;
+
 class FileDataService {
 
   private $rootPath;
   private $filesystem;
+  private $app_env;
 
-  public function __construct(string $rootPath) {
+  public function __construct(string $rootPath, string $app_env) {
     $basedir = $rootPath .DIRECTORY_SEPARATOR.'templates';
     $folder = 'helper';
     $path = $basedir.DIRECTORY_SEPARATOR.$folder;
@@ -24,6 +28,7 @@ class FileDataService {
       'path' => $path,
     ];
 
+    $this->app_env = $app_env;
     $this->helper = $helper;
     $this->filesystem = new Filesystem();
   }
@@ -43,8 +48,31 @@ class FileDataService {
 
     $style = $this->helper['path'].DIRECTORY_SEPARATOR.$rand.'.scss';
     try {
-      if(!$this->filesystem->exists($template)){
+      if(!$this->filesystem->exists($style)){
         $this->filesystem->dumpFile($style, $comp->getStylesContent());
+
+        $filename = $rand.'.scss';
+        if($this->test($filename)){
+          $cmdpath = $this->helper['rootPath'].DIRECTORY_SEPARATOR.'node_modules/.bin/npm';
+          $cmd = "dev";
+          if($this->app_env === "prod"){
+            $cmd = "build";
+          }
+          $process = new Process([$cmdpath, 'run-script', $cmd]);
+
+          $process->start();
+
+          while ($process->isRunning()) {
+            // waiting for process to finish
+          }
+
+          if (!$process->isSuccessful()) {
+            throw new ProcessFailedException($process);
+          }
+
+          $output = $process->getOutput();
+        }
+
       }
     }catch(IOException $e){
       dump($e);
@@ -59,5 +87,20 @@ class FileDataService {
 
   function generateRandomString($length = 10) {
     return substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length);
+  }
+
+  private function test($filename){
+    $basedir = $this->helper['rootPath'].DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.'css'.DIRECTORY_SEPARATOR;
+
+    try{
+      $main = $basedir.'main.scss';
+      $import = '@import "../../templates/helper/'.$filename.'";';
+      $this->filesystem->appendToFile($main, $import);
+      $this->filesystem->appendToFile($main, "\n");
+      return true;
+    }catch(IOException $e){
+      return false;
+    }
+    return false;
   }
 }
