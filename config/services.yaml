@@ -5,7 +5,6 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
   test: '%env(CHECK_LEAD_LEONTEL_ENDPOINT)%' # this is loaded from env_var in my system
-  leads_url: '%env(LEADS_URL)%' # this from env files
   app_env: '%env(APP_ENV)%' # this from env files
 
 
