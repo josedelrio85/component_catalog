@@ -23,6 +23,21 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
     });
   });
+
+  let categories = document.querySelectorAll("[id^='cat-']");
+  categories.forEach((cv, ci, listObj) => {
+    cv.addEventListener('click', (event) => {
+      let idcat = event.target.getAttribute("data-id");
+      let divcompscat = document.getElementById('compcat-' + idcat);
+      if(divcompscat.classList.contains('d-flex')){
+        divcompscat.classList.add('d-none');
+        divcompscat.classList.remove('d-flex');
+      }else{
+        divcompscat.classList.add('d-flex');
+        divcompscat.classList.remove('d-none');
+      }
+    });
+  });
 });
 
 
@@ -39,3 +54,17 @@ function getDataComponent(idcomp) {
     .catch((error) => {reject(error);})
   });
 }
+
+// function getComponentsCategory(idcat) {
+//   const urlEndPoint = '/data-category';
+//   let params = {
+//     idcat: idcat,
+//   }
+//   return new Promise((resolve, reject) => {
+//     landingCommander.makePostRequestFormData(params, urlEndPoint)
+//     .then((result) => {
+//       resolve(result);
+//     })
+//     .catch((error) => {reject(error);})
+//   });
+// }
