@@ -84,4 +84,11 @@ Encore
     //.addEntry('admin', './assets/js/admin.js')
 ;
 
+// Encore.enableSassLoader(function(options) {
+//   // options.includePaths = [...]
+// }, {
+//   // set optional Encore-specific options
+//   // resolveUrlLoader: true
+// });
+
 module.exports = Encore.getWebpackConfig();
