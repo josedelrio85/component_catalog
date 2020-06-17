@@ -12,7 +12,6 @@ class FileDataService {
   private $rootPath;
   private $filesystem;
 
-
   public function __construct(string $rootPath) {
     $basedir = $rootPath .DIRECTORY_SEPARATOR.'templates';
     $folder = 'helper';
@@ -32,17 +31,21 @@ class FileDataService {
   public function createTemplate(Comp $comp) {
     $info = [];
 
-    $rand = $this->generateRandomString();
+    $rand = $comp->getId();
     $template = $this->helper['path'].DIRECTORY_SEPARATOR.$rand.'.html.twig';
     try {
-      $this->filesystem->dumpFile($template, $comp->getHtmlContent());
+      if(!$this->filesystem->exists($template)){
+        $this->filesystem->dumpFile($template, $comp->getHtmlContent());
+      }
     }catch(IOException $e){
       dump($e);
     }
 
     $style = $this->helper['path'].DIRECTORY_SEPARATOR.$rand.'.scss';
     try {
-      $this->filesystem->dumpFile($style, $comp->getStylesContent());
+      if(!$this->filesystem->exists($template)){
+        $this->filesystem->dumpFile($style, $comp->getStylesContent());
+      }
     }catch(IOException $e){
       dump($e);
     }
