@@ -13,6 +13,9 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Json;
 
 class ComponentType extends AbstractType
 {
@@ -28,8 +31,15 @@ class ComponentType extends AbstractType
     $categories = $this->entityManager->getRepository(Category::class)->findAll();
 
     $builder
-      ->add('name', TextType::class)
+      ->add('name', TextType::class, [
+        'required' => true,
+        'constraints' => [
+          new NotBlank(),
+          new Length(['min' => 3]),
+        ]
+      ])
       ->add('idCategory', ChoiceType::class, [
+        'required' => true,
         'choices' => $categories,
         'choice_value' => 'id',
         'choice_label' => function(?Category $cat) {
@@ -38,10 +48,25 @@ class ComponentType extends AbstractType
         'label' => 'Category',
       ])
       ->add('html_data', TextareaType::class, [
-        'label' => 'Html data [JSON]'
+        'label' => 'Html data [JSON]',
+        'constraints' => [
+          new Json(),
+        ]
       ])
-      ->add('html_content', TextareaType::class)
-      ->add('styles_content', TextareaType::class)
+      ->add('html_content', TextareaType::class, [
+        'required' => true,
+        'constraints' => [
+          new NotBlank(),
+          new Length(['min' => 3]),
+        ]
+      ])
+      ->add('styles_content', TextareaType::class, [
+        'required' => true,
+        'constraints' => [
+          new NotBlank(),
+          new Length(['min' => 3]),
+        ]
+      ])
       ->add('save', SubmitType::class)
     ;
 

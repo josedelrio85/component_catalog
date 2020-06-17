@@ -1,9 +1,6 @@
 <div class="pt-0">
   <div class="single-component">
     <h2 class="h1">{{component.name}}</h2>
-    {# <span class="name-container w-100 d-block bg-light p-2 font-italic overflow-auto d-block mt-3">
-      {{component.htmltemplate }}
-    </span> #}
 
     {% if component.htmldata is not null and template is not null %}
       <div class="py-3">
@@ -20,9 +17,6 @@
     </pre>
     
     <h2 class="h5 font-italic"> Styles </h2>
-    {# <span class="name-container w-100 d-block bg-light p-2 font-italic overflow-auto d-block mt-3">
-    {{component.stylestemplate }}
-    </span> #}
     <pre class="code-block mt-3"><span class="copy-clipboard">Copy</span>
     <code>{{component.stylescontent }}</code>
     </pre>
