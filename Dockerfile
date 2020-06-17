@@ -4,6 +4,7 @@ FROM 952729869933.dkr.ecr.eu-west-1.amazonaws.com/symfony-node:7.2.10-8.12.0
 ENV COMPOSER_VERSION=1.1.0 COMPOSER_ALLOW_SUPERUSER=1 COMPOSER_PATH=/usr/local/bin
 ENV SYMFONY_ENV prod
 ENV APP_ENV prod
+ENV CHECK_LEAD_LEONTEL_ENDPOINT https://ws.bysidecar.es/lead/smartcenter/isopen
 
 WORKDIR /var/www/html
 ADD --chown=www-data:www-data . /var/www/html
@@ -22,8 +23,6 @@ RUN curl -sS https://getcomposer.org/installer | \
 ADD ./ci/conf/php.ini /usr/local/etc/php
 ADD ./ci/conf/fpm-pool.conf /usr/local/etc/php-fpm.d/zzz_custom.conf
 ADD ./ci/conf/nginx.conf /etc/nginx/nginx.conf
-
-ENV CHECK_LEAD_LEONTEL_ENDPOINT https://ws.bysidecar.es/lead/smartcenter/isopen
 
 RUN composer install \
   && npm install \

@@ -74,3 +74,13 @@ yarn encore dev --watch
 # or
 npm run-script watch
 ```
+
+### Enviroment variables
+
+* You must set an environment variable to set the propper DB connection string. You have to substitute the values for the correct params to match your DB requirements
+
+  ```bash
+  set COMPONENTS_DB_URL=mysql://db_user:db_password@127.0.0.1:3306/db_name?serverVersion=5.7
+  ```
+
+* Another option is to create an `.env.local` file and set this values in this file. DO NOT PUSH THIS FILE!
