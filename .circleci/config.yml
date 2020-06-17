@@ -2,9 +2,9 @@ version: 2
 jobs:
   build:
     machine: true
-    branches: 
-      only: 
-        - master
+    # branches: 
+    #   only: 
+    #     - master
     steps:
       - checkout
       - run:
