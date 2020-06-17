@@ -1,5 +1,7 @@
 FROM 952729869933.dkr.ecr.eu-west-1.amazonaws.com/symfony-node:7.2.10-8.12.0
 
+RUN apk add mysql-client
+
 # Set ENV VARS
 ENV COMPOSER_VERSION=1.1.0 COMPOSER_ALLOW_SUPERUSER=1 COMPOSER_PATH=/usr/local/bin
 ENV SYMFONY_ENV prod
@@ -30,8 +32,6 @@ RUN composer install \
   && npm run-script build \
   && composer dump-env prod \
   && php bin/console cache:warmup 
-
-#RUN rm .env.local
 
 # Add supervisord configuration to run both nginx and fpm.
 ADD ./ci/conf/supervisord.conf /etc/supervisor/conf.d/supervisord.conf

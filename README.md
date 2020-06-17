@@ -84,3 +84,21 @@ npm run-script watch
   ```
 
 * Another option is to create an `.env.local` file and set this values in this file. DO NOT PUSH THIS FILE!
+
+### Run in a docker image
+* Set DB connection string
+
+```yml
+ENV COMPONENTS_DB_URL=mysql://db_user:db_password@[docker_mysql_container_ip]:3306/db_name?serverVersion=5.7
+```
+* To check the mysql container IP, get `IPAddress` value.
+
+```bash
+docker inspect [docker_network] -f "{{json .NetworkSettings.Networks }}"
+```
+
+
+```bash
+docker image build -t comp .
+docker container run --name comp -p 9000:80 --network mysql_default comp
+```
