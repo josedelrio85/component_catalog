@@ -50,6 +50,14 @@ ingress:
    - secretName: tls-components-bysidecar-me
      hosts:
        - components.bysidecar.me
+
+env:
+- name: COMPONENTS_DB_URL # name of variable in the code
+  valueFrom:
+    secretKeyRef:
+      name: components-database  # [name_of_secret]
+      key: COMPONENTS_DB_URL             # [KEY]
+      
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
