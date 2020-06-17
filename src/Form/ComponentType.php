@@ -37,17 +37,10 @@ class ComponentType extends AbstractType
         },
         'label' => 'Category',
       ])
-      // ->add('html_template', TextType::class, [
-      //   'row_attr' => ['class' => 'text-editor', 'id' => 'html_template'],
-      // ])
       ->add('html_data', TextareaType::class, [
         'label' => 'Html data [JSON]'
       ])
       ->add('html_content', TextareaType::class)
-      // ->add('styles_template', TextType::class, [
-      //   'row_attr' => ['class' => 'text-editor', 'id' => 'styles_template'],
-      //   // 'attr' => ['readonly' => true],
-      // ])
       ->add('styles_content', TextareaType::class)
       ->add('save', SubmitType::class)
     ;

@@ -33,22 +33,20 @@ class CompRepository extends ServiceEntityRepository
     // }
 
 
-    // /**
-    //  * @return Comp[] Returns an array of Comp objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return Comp[] Returns an array of Comp objects
+     */
+    public function getCompsByCat($value)
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+      return $this->createQueryBuilder('c')
+        ->andWhere('c.idCategory = :val')
+        ->setParameter('val', $value)
+        ->orderBy('c.id', 'ASC')
+        ->setMaxResults(10)
+        ->getQuery()
+        ->getResult()
+    ;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Comp

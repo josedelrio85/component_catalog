@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 use App\Form\ComponentType;
 use App\Entity\Comp;
+use App\Entity\Category;
 use App\Service\FileDataService;
 
 class ComponentController extends AbstractController
@@ -25,10 +26,15 @@ class ComponentController extends AbstractController
    */
   public function index()
   {
-    $components = $this->getDoctrine()->getRepository(Comp::class)->findAll();
+    $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
+    $components = [];
+    foreach($categories as $cat){
+      $components[$cat->getId()] = $this->getDoctrine()->getRepository(Comp::class)->getCompsByCat($cat->getId());
+    }
 
     return $this->render('site-components/index.html.twig', [
-      'list' => $components,
+      'list' => $categories,
+      'listcomp' => $components,
     ]);
   }
 
@@ -83,8 +89,6 @@ class ComponentController extends AbstractController
 
     $form->handleRequest($request);
     if ($form->isSubmitted() && $form->isValid()){
-        // die(dump($form->getData()));
-        // $comp = $form->getData();
         $em->persist($form->getData());
         $em->flush();
         return $this->redirectToRoute('component');
@@ -154,6 +158,34 @@ class ComponentController extends AbstractController
       'data' => $comp->getHtmlData(),
     ]);
 
+    return new JsonResponse([
+      'success' => true,
+      'template' => $template,
+    ]);
+  }
+
+  /**
+   * @Route("/data-category", name="data-category")
+   */
+   public function dataCategory(Request $request) {
+    $idcat = $request->get("idcat");
+    
+    $em = $this->getDoctrine()->getManager();
+    $list = $em->getRepository(Comp::class)->getCompsByCat($idcat);
+
+    if(!$list){
+      return new JsonResponse([
+        'success' => false,
+        'template' => null,
+      ]);
+    }
+    
+    // $output = $this->fds->createTemplate($comp);
+    $template = $this->renderView('site-components/sidebar-child/sidebar-child.html.twig', [
+      'list' => $list,
+    ]);
+
+    // dump($template);die();
     return new JsonResponse([
       'success' => true,
       'template' => $template,

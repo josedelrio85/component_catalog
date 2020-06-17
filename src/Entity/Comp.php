@@ -36,11 +36,13 @@ class Comp
 
     /**
      * @ORM\Column(type="json", nullable=true)
+     * 
      */
     private $html_data;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * 
      */
     private $html_template;
 
@@ -99,7 +101,6 @@ class Comp
 
         return $this;
     }
-
 
     public function getHtmlData()
     {

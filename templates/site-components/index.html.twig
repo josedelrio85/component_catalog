@@ -3,21 +3,9 @@
 {% block title %}Bysidecar | Components catalog{% endblock %}
 
 {% block body %}
-  {# Main header #}
-  {% include 'site-components/header-main-section/header-main-section.html.twig' %}
-
+  {{ parent() }}
   {# Main container #}
   {% include 'site-components/main-container/main-container.html.twig' %}
-  
-  {# <div style="background-color: red; height: 200px; margin-top:250px;">
-    {% if is_granted("ROLE_ADMIN") %}
-      ROLE_ADMIN
-    {% elseif is_granted("ROLE_USER") %}
-      ROLE_USER
-    {% elseif is_granted("ROLE_SUPER_ADMIN") %}
-      ROLE_SUPER_ADMIN
-    {% endif %}
-  </div> #}
 {% endblock %}
 
 {% block javascripts %}
