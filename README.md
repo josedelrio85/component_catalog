@@ -102,3 +102,4 @@ docker inspect [docker_network] -f "{{json .NetworkSettings.Networks }}"
 docker image build -t comp .
 docker container run --name comp -p 9000:80 --network mysql_default comp
 ```
+
