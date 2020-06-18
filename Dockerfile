@@ -27,6 +27,7 @@ ADD ./ci/conf/nginx.conf /etc/nginx/nginx.conf
 WORKDIR /var/www/html
 ADD . /var/www/html
 
+
 RUN composer install \
     && npm install \
     && npm rebuild node-sass \
