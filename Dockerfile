@@ -29,6 +29,7 @@ ADD ./ci/conf/nginx.conf /etc/nginx/nginx.conf
 RUN composer install
 
 USER www-data
+ADD --chown=www-data:www-data . /var/www/html
 RUN npm install \
     && npm rebuild node-sass \
     && npm run-script dev
