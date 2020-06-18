@@ -58,8 +58,8 @@ class FileDataService {
           if($this->app_env === "prod"){
             $cmd = "build";
           }
-          $process = new Process([$cmdpath, 'run-script', $cmd]);
 
+          $process = new Process([$cmdpath, 'run-script', $cmd]);
           $process->start();
 
           while ($process->isRunning()) {
