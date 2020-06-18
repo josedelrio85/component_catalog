@@ -74,3 +74,55 @@ yarn encore dev --watch
 # or
 npm run-script watch
 ```
+
+### Enviroment variables
+
+* You must set an environment variable to set the propper DB connection string. You have to substitute the values for the correct params to match your DB requirements
+
+  ```bash
+  set COMPONENTS_DB_URL=mysql://db_user:db_password@127.0.0.1:3306/db_name?serverVersion=5.7
+  ```
+
+* Another option is to create an `.env.local` file and set this values in this file. DO NOT PUSH THIS FILE!
+
+### Run in a docker image
+* Set DB connection string
+
+```yml
+ENV COMPONENTS_DB_URL=mysql://db_user:db_password@[docker_mysql_container_ip]:3306/db_name?serverVersion=5.7
+```
+* To check the mysql container IP, get `IPAddress` value.
+
+```bash
+docker inspect [docker_network] -f "{{json .NetworkSettings.Networks }}"
+```
+
+
+```bash
+docker image build -t comp --build-arg app_env=dev .
+docker container run --name comp -p 9000:80 --network mysql_default comp
+```
+
+### Create local DB environment (alternative to docker)
+
+* Build a MySQL environment in local DB, and get the parameters to connect.
+
+* In `.env` file set the propper connection string
+
+  ```env
+  set COMPONENTS_DB_URL=mysql://db_user:db_password@127.0.0.1:3306/db_name?serverVersion=5.7
+  ```
+
+* Execute Symfony Migrations script to recreate the DB environment
+
+  ```sql
+  php bin/console doctrine:migrations:migrate
+  ```
+
+* Create entries for users
+
+  ```sql
+  insert into components.user (username, password, email, is_active, roles) values
+  ('josedelrio', 'test', 'joserio@bysidecar.com', '1', '{\"ROLES\": \"ROLE_ADMIN\"}'),
+  ('test', 'test', 'test@bysidecar.com', '1', '{\"ROLES\": \"ROLE_USER\"}');
+  ```

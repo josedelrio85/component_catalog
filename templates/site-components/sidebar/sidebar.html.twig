@@ -2,22 +2,36 @@
 
   {% include 'site-components/search-form/search-form.html.twig' %}
 
-  <div class="edit-button-container text-right">
-    <a class="btn btn-primary d-block d-sm-inline-block d-lg-block" href="{{ path('component_change') }}" role="button">
-      <span class="icon icon-folder-plus mr-2"></span> Create component
-    </a>
-  </div>
+  {% if is_granted('ROLE_ADMIN') %}
+    <div class="edit-button-container text-right">
+      <a class="btn btn-primary d-block d-sm-inline-block d-lg-block" href="{{ path('component_create') }}" role="button">
+        <span class="icon icon-folder-plus mr-2"></span> Create component
+      </a>
+    </div>
+  {% endif %}
 
   <div class="single-component-list mt-4 px-3 py-3">
-    {% for key, component in list %}
+  {% for key, cat in list %}
+    {% if listcomp[cat.id]|length > 0 %}
       <div class="single-component d-flex justify-content-between">
-        <a href="#" id="comp-{{key}}" data-name="{{component}}">{{component}}</a>
-        <div class="edit-block d-flex justify-content-end">
-          <a href="{{ path('component_change', {path: component}) }}" class="icon icon-pencil text-primary mr-2"></a>
-          <a href="{{ path('component_delete', {path: component}) }}" class="icon icon-cross text-primary"></a>
+        <a href="#" id="cat-{{key}}" data-id="{{cat.id}}">{{cat.name}}</a>
+        {# componets of the category #}
+        <div class="single-component-list mt-4 px-3 py-3 d-none" id="compcat-{{cat.id}}">
+          {% for key, component in listcomp[cat.id] %}
+            <div class="single-component d-flex justify-content-between">
+              <a href="#" id="comp-{{key}}" data-id="{{component.id}}">{{component.name}}</a>
+              {% if is_granted('ROLE_ADMIN') %}
+                <div class="edit-block d-flex justify-content-end">
+                  <a href="{{ path('component_edit', {id: component.id}) }}" class="icon icon-pencil text-primary mr-2"></a>
+                  <a href="{{ path('component_delete', {id: component.id}) }}" class="icon icon-cross text-primary"></a>
+                </div>
+              {% endif %}
+            </div>
+          {% endfor %}
         </div>
       </div>
-    {% endfor %}
+    {% endif %}
+  {% endfor %}
   </div>
 
 </div>

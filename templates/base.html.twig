@@ -10,7 +10,12 @@
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        {% block body %}
+          {# Main header #}
+          {% include 'site-components/header-main-section/header-main-section.html.twig' %}
+
+          
+        {% endblock %}
         {% block javascripts %}
               {{ encore_entry_script_tags('app') }}
         {% endblock %}

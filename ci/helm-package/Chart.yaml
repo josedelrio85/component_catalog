@@ -1,5 +1,5 @@
 apiVersion: v2
-name: comp-catalog
+name: compcatalog
 description: Bysidecar's component catalog
 
 # A chart can be either an 'application' or a 'library' chart.

@@ -1,13 +1,25 @@
 document.addEventListener("DOMContentLoaded", (e) => {
-  let pathfield = document.getElementById("component_path");
-  let html_template = document.getElementById("component_html_template");
-  let styles_template = document.getElementById("component_styles_template");
-  pathfield.addEventListener('change', (e) => {
-    let prefix = "components/";
-    let sufix = ".html.twig";
-    let sufix2 = ".scss";
-    let pathvalue = e.target.value + "/" + e.target.value;
-    html_template.value = prefix + pathvalue + sufix;
-    styles_template.value = prefix + pathvalue + sufix2;
+
+  let html_data = document.getElementById('component_html_data');
+  let save = document.getElementById('component_save');
+  // let x = document.forms;
+
+  html_data.addEventListener('focusout', (e) => {
+    save.disabled = false;
+    if(!IsValidJSONString(e.target.value)){
+      save.disabled = true;
+      html_data.setCustomValidity("Not a valid JSON format.");
+    }else{
+      html_data.setCustomValidity("");
+    }
   });
+
+  function IsValidJSONString(str) {
+    try {
+      JSON.parse(str);
+    } catch (e) {
+      return false;
+    }
+    return true;
+  }
 });

@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Categories{% endblock %}
+
+{% block body %}
+  {{ parent() }}
+
+  <div class="main-container container mt-6 py-4">
+    <div class="row">
+      <div class="edit-container col-lg-12 px-4 px-lg-6 pt-5 pt-lg-0">
+        <div class="row">
+          <div class="col-12 edit-container-block">
+            <div class="bg-primary p-4 mb-4 box-shadow-base">
+              <h1 class="text-white h3"><em>Categories</em></h1>
+            </div>
+            {% for cat in list %}
+              <div class="single-component d-flex justify-content-between">
+                <a>{{cat.name}}</a>
+                <div class="edit-block d-flex justify-content-end">
+                  <a href="{{ path('category_change', {id: cat.id}) }}" class="icon icon-pencil text-primary mr-2"></a>
+                  <a href="{{ path('category_delete', {id: cat.id}) }}" class="icon icon-cross text-primary"></a>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
