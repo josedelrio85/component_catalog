@@ -113,8 +113,16 @@ docker container run --name comp -p 9000:80 --network mysql_default comp
   set COMPONENTS_DB_URL=mysql://db_user:db_password@127.0.0.1:3306/db_name?serverVersion=5.7
   ```
 
-  * Execute Symfony Migrations script to recreate the DB environment
+* Execute Symfony Migrations script to recreate the DB environment
 
   ```sql
   php bin/console doctrine:migrations:migrate
+  ```
+
+* Create entries for users
+
+  ```sql
+  insert into components.user (username, password, email, is_active, roles) values
+  ('josedelrio', 'test', 'joserio@bysidecar.com', '1', '{\"ROLES\": \"ROLE_ADMIN\"}'),
+  ('test', 'test', 'test@bysidecar.com', '1', '{\"ROLES\": \"ROLE_USER\"}');
   ```

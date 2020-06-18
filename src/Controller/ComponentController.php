@@ -155,7 +155,7 @@ class ComponentController extends AbstractController
       ]);
     }
     
-    // $output = $this->fds->createTemplate($comp);
+    $output = $this->fds->createTemplate($comp);
     $template = $this->renderView('component/component.html.twig', [
       'component' => $comp,
       'template' => $output['template'],
