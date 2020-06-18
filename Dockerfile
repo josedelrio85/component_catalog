@@ -7,7 +7,6 @@ ARG app_env
 # Set ENV VARS
 ENV COMPOSER_VERSION=1.1.0 COMPOSER_ALLOW_SUPERUSER=1 COMPOSER_PATH=/usr/local/bin
 ENV APP_ENV $app_env
-ENV COMPONENTS_DB_URL=mysql://root:root_bsc@172.27.0.1:3306/components?serverVersion=5.7
 
 
 # Use php helper scripts to install PHP extensions (to reduce image size)
@@ -29,6 +28,7 @@ ADD ./ci/conf/nginx.conf /etc/nginx/nginx.conf
 USER www-data
 WORKDIR /var/www/html
 ADD --chown=www-data:www-data . /var/www/html
+RUN chmod 777 /var/www/html
 
 RUN composer install
 
