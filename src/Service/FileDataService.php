@@ -2,7 +2,7 @@
 
 namespace App\Service;
 
-// use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use App\Entity\Comp;
@@ -52,30 +52,13 @@ class FileDataService {
         $this->filesystem->dumpFile($style, $comp->getStylesContent());
 
         $filename = $rand.'.scss';
-        if($this->test($filename)){
-          $cmdpath = $this->helper['rootPath'].DIRECTORY_SEPARATOR.'node_modules/.bin/npm';
-          $cmd = "dev";
-          if($this->app_env === "prod"){
-            $cmd = "build";
-          }
-
-          $process = new Process([$cmdpath, 'run-script', $cmd]);
-          $process->start();
-
-          while ($process->isRunning()) {
-            // waiting for process to finish
-          }
-
-          if (!$process->isSuccessful()) {
-            throw new ProcessFailedException($process);
-          }
-
-          $output = $process->getOutput();
+        if($this->addImport($filename)){
+          $this->launchNpm();
         }
-
       }
     }catch(IOException $e){
-      dump($e);
+      throw $e;
+      return array();
     }
 
     $info = [
@@ -85,15 +68,12 @@ class FileDataService {
     return $info;
   }
 
-  function generateRandomString($length = 10) {
-    return substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length);
-  }
-
-  private function test($filename){
+  private function addImport($filename){
     $basedir = $this->helper['rootPath'].DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.'css'.DIRECTORY_SEPARATOR;
 
     try{
-      $main = $basedir.'main.scss';
+      // $main = $basedir.'main.scss';
+      $main = $basedir.'_dynamic.scss';
       $import = '@import "../../templates/helper/'.$filename.'";';
       $this->filesystem->appendToFile($main, $import);
       $this->filesystem->appendToFile($main, "\n");
@@ -102,5 +82,84 @@ class FileDataService {
       return false;
     }
     return false;
+  }
+
+  private function reset(){
+    $basedir = $this->helper['rootPath'].DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.'css'.DIRECTORY_SEPARATOR;
+
+    try{
+      $main = $basedir.'_dynamic.scss';
+      $this->filesystem->dumpFile($main, "");
+    }catch(IOException $e){
+      return false;
+    }
+    return true;
+  }
+
+  private function launchNpm(){
+    $cmdpath = $this->helper['rootPath'].DIRECTORY_SEPARATOR.'node_modules/.bin/npm';
+    $cmd = "dev";
+    if($this->app_env === "prod"){
+      $cmd = "build";
+    }
+
+    $process = new Process([$cmdpath, 'run-script', $cmd]);
+    $process->start();
+
+    while ($process->isRunning()) {
+      // waiting for process to finish
+    }
+
+    if (!$process->isSuccessful()) {
+      throw new ProcessFailedException($process);
+    }
+
+    $output = $process->getOutput();
+  }
+
+  private function resetHelper() {
+    $finder = new Finder();
+    $iterator = $finder->files()->in($this->helper['path']);
+    foreach($iterator as $file) {
+      $path = $file->getRealpath();
+      $this->filesystem->remove($path); 
+    }
+  }
+
+  public function initializeTemplates(array $comps){
+    // reset _dynamic.scss
+    $this->reset();
+
+    // empty helper
+    $this->resetHelper();
+    // return;
+
+    foreach($comps as $comp){
+      $rand = $comp->getId();
+      $template = $this->helper['path'].DIRECTORY_SEPARATOR.$rand.'.html.twig';
+      try {
+        if(!$this->filesystem->exists($template)){
+          $this->filesystem->dumpFile($template, $comp->getHtmlContent());
+        }
+      }catch(IOException $e){
+        throw $e;
+        return array();
+      }
+  
+      $style = $this->helper['path'].DIRECTORY_SEPARATOR.$rand.'.scss';
+      try {
+        if(!$this->filesystem->exists($style)){
+          $this->filesystem->dumpFile($style, $comp->getStylesContent());
+  
+          $filename = $rand.'.scss';
+          if($this->addImport($filename)){
+          }
+        }
+      }catch(IOException $e){
+        throw $e;
+        return array();
+      }
+    }
+    $this->launchNpm();
   }
 }

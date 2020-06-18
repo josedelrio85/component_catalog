@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
@@ -154,7 +155,7 @@ class ComponentController extends AbstractController
       ]);
     }
     
-    $output = $this->fds->createTemplate($comp);
+    // $output = $this->fds->createTemplate($comp);
     $template = $this->renderView('component/component.html.twig', [
       'component' => $comp,
       'template' => $output['template'],
@@ -170,7 +171,7 @@ class ComponentController extends AbstractController
   /**
    * @Route("/data-category", name="data-category")
    */
-   public function dataCategory(Request $request) {
+  public function dataCategory(Request $request) {
     $idcat = $request->get("idcat");
     
     $em = $this->getDoctrine()->getManager();
@@ -192,5 +193,19 @@ class ComponentController extends AbstractController
       'success' => true,
       'template' => $template,
     ]);
+  }
+
+  /**
+   * @Route("/initialize", name="initialize")
+   */
+  public function initialize(Request $request){
+    $comps = $this->getDoctrine()->getRepository(Comp::class)->findAll();
+
+    $this->fds->initializeTemplates($comps);
+
+    $response = new Response();
+    $response->setStatusCode(Response::HTTP_OK);
+    $response->send();
+    return $response;
   }
 }

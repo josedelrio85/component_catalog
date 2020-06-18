@@ -8,7 +8,6 @@ ARG app_env
 ENV COMPOSER_VERSION=1.1.0 COMPOSER_ALLOW_SUPERUSER=1 COMPOSER_PATH=/usr/local/bin
 ENV APP_ENV $app_env
 
-
 # Use php helper scripts to install PHP extensions (to reduce image size)
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
  && docker-php-ext-install -j$(nproc) iconv mbstring intl pdo_mysql gd zip bcmath
