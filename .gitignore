@@ -15,7 +15,6 @@
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
-templates/helper
 .env.local
 
 ignore.txt
