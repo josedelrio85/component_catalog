@@ -203,9 +203,6 @@ class ComponentController extends AbstractController
 
     $this->fds->initializeTemplates($comps);
 
-    $response = new Response();
-    $response->setStatusCode(Response::HTTP_OK);
-    $response->send();
-    return $response;
+    return $this->redirectToRoute('component');
   }
 }
