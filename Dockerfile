@@ -26,22 +26,17 @@ ADD ./ci/conf/nginx.conf /etc/nginx/nginx.conf
 
 
 WORKDIR /var/www/html
-ADD --chown=www-data:www-data . /var/www/html
-USER root
-RUN chmod 777 -R /var/www/html/
+ADD . /var/www/html
 
-USER www-data
-RUN composer install
-
-# ADD --chown=www-data:www-data . /var/www/html
-RUN npm install \
+RUN composer install \
+    && npm install \
     && npm rebuild node-sass \
-    && npm run-script dev
+    && npm run-script dev \
+    && php bin/console cache:warmup
 
-RUN php bin/console cache:warmup
+RUN chown -R www-data:www-data /var/www/html
 
 USER root
-
 # Add supervisord configuration to run both nginx and fpm.
 ADD ./ci/conf/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
