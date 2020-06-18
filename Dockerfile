@@ -28,9 +28,9 @@ ADD ./ci/conf/nginx.conf /etc/nginx/nginx.conf
 USER www-data
 WORKDIR /var/www/html
 ADD --chown=www-data:www-data . /var/www/html
-RUN chmod 777 /var/www/html
+# RUN chmod 777 /var/www/html
 
-RUN composer install
+RUN sudo -u www-data composer install
 
 # ADD --chown=www-data:www-data . /var/www/html
 RUN npm install \
