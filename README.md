@@ -119,10 +119,32 @@ docker container run --name comp -p 9000:80 --network mysql_default comp
   php bin/console doctrine:migrations:migrate
   ```
 
+* Generate an encoded password
+
+  ```bash
+  php bin/console security:encode-password '[your_pass]' 'App\Entity\User'
+
+  # Output:
+
+  Symfony Password Encoder Utility
+  ================================
+
+  ------------------ --------------------------------------------------------------------------------------------------- 
+    Key                Value                                                                                              
+  ------------------ --------------------------------------------------------------------------------------------------- 
+    Encoder used       Symfony\Component\Security\Core\Encoder\MigratingPasswordEncoder                                   
+    Encoded password   $argon2id$v=19$m=65536,t=4,p=1$mKAiealrB/+WDq4zwwQ7mg$5dzVZZZZZZZZpXymzdBrqhnkz442MQThfBGjghh7wI  
+  ------------------ --------------------------------------------------------------------------------------------------- 
+
+  ! [NOTE] Self-salting encoder used: the encoder generated its own built-in salt.                
+  ```
+
+  Copy the encoded password result and when the DB is created, update your user with this value.
+
 * Create entries for users
 
   ```sql
-  insert into components.user (username, password, email, is_active, roles) values
-  ('josedelrio', 'test', 'joserio@bysidecar.com', '1', '{\"ROLES\": \"ROLE_ADMIN\"}'),
-  ('test', 'test', 'test@bysidecar.com', '1', '{\"ROLES\": \"ROLE_USER\"}');
+  insert into components.user (username, password, email, is_active, roles, salt) values
+  ('admin', 'test', 'admin@bysidecar.com', '1', '{\"ROLES\": \"ROLE_ADMIN\"}', null),
+  ('test', 'test', 'test@bysidecar.com', '1', '{\"ROLES\": \"ROLE_USER\"}', null);
   ```

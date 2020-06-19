@@ -40,6 +40,11 @@ class User implements UserInterface, \Serializable
     private $isActive;
 
     /**
+     * @ORM\Column(name="salt", type="string")
+     */
+    private $salt;
+
+    /**
      * @ORM\Column(type="json")
      */
     private $roles = [];

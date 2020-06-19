@@ -17,6 +17,7 @@ use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
+use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
 class CompAuthenticator extends AbstractFormLoginAuthenticator
 {
@@ -28,12 +29,15 @@ class CompAuthenticator extends AbstractFormLoginAuthenticator
     private $entityManager;
     private $urlGenerator;
     private $csrfTokenManager;
+/** @var EncoderFactoryInterface */
+    private $encoderFactory;
 
-    public function __construct(EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager)
+    public function __construct(EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, EncoderFactoryInterface $encoderFactory)
     {
         $this->entityManager = $entityManager;
         $this->urlGenerator = $urlGenerator;
         $this->csrfTokenManager = $csrfTokenManager;
+        $this->encoderFactory = $encoderFactory;
     }
 
     public function supports(Request $request)
@@ -83,9 +87,17 @@ class CompAuthenticator extends AbstractFormLoginAuthenticator
 
     public function checkCredentials($credentials, UserInterface $user)
     {
-        if ($user->getPassword() === $credentials['password']) {
-            return true;
-        }
+        $encoder = $this->encoderFactory->getEncoder(new User());
+        $encodedPassword = $encoder->encodePassword($credentials['password'], $user->getSalt());
+
+        $validPassword = $encoder->isPasswordValid(
+            $user->getPassword(),       // the encoded password
+            $credentials['password'],   // the submitted password
+            $user->getSalt()
+        );
+
+        if ($validPassword) return true;
+
         return false;
     }
 
