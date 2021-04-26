@@ -1,4 +1,4 @@
-<div class="sidebar col-lg-3">
+{# <div class="sidebar col-lg-3">
 
   {% include 'site-components/search-form/search-form.html.twig' %}
 
@@ -15,10 +15,10 @@
     {% if listcomp[cat.id]|length > 0 %}
       <div class="single-component d-flex justify-content-between">
         <a href="#" id="cat-{{key}}" data-id="{{cat.id}}">{{cat.name}}</a>
-        {# componets of the category #}
+        componets of the category
         <div class="single-component-list mt-4 px-3 py-3 d-none" id="compcat-{{cat.id}}">
           {% for key, component in listcomp[cat.id] %}
-            <div class="single-component d-flex justify-content-between">
+            <div class="d-flex justify-content-between">
               <a href="#" id="comp-{{key}}" data-id="{{component.id}}">{{component.name}}</a>
               {% if is_granted('ROLE_ADMIN') %}
                 <div class="edit-block d-flex justify-content-end">
@@ -33,5 +33,48 @@
     {% endif %}
   {% endfor %}
   </div>
+</div> #}
 
+<div class="sidebar col-lg-3">
+
+  {% include 'site-components/search-form/search-form.html.twig' %}
+
+  {% if is_granted('ROLE_ADMIN') %}
+    <div class="edit-button-container text-right">
+      <a class="btn btn-primary d-block d-sm-inline-block d-lg-block" href="{{ path('component_create') }}" role="button">
+        <span class="icon icon-folder-plus mr-2"></span> Create component
+      </a>
+    </div>
+  {% endif %}
+
+  <div class="col-12 mt-4 px-3 py-3">
+  {% for key, cat in list %}
+    {% if listcomp[cat.id]|length > 0 %}
+      <div class="mt-1 mb-1">
+        <div class="">
+          <a href="#" id="cat-{{key}}" data-id="{{cat.id}}">{{cat.name}}</a>
+        </div>
+        {# componets of the category #}
+        <div class="row d-none" id="compcat-{{cat.id}}">
+          {% for key, component in listcomp[cat.id] %}
+            <div class="col-11 offset-1">
+              <div class="row">
+                <div class="col-6 mt-1 mb-1">
+                  <a href="#" id="comp-{{key}}" data-id="{{component.id}}">{{component.name}}</a>
+                </div>
+
+                {% if is_granted('ROLE_ADMIN') %}
+                  <div class="col-4">
+                    <a href="{{ path('component_edit', {id: component.id}) }}" class="icon icon-pencil text-primary mr-2"></a>
+                    <a href="{{ path('component_delete', {id: component.id}) }}" class="icon icon-cross text-primary"></a>
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+  {% endfor %}
+  </div>
 </div>
