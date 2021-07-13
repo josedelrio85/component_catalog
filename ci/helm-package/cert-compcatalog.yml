@@ -1,19 +1,19 @@
 apiVersion: certmanager.k8s.io/v1alpha1
 kind: Certificate
 metadata:
-  name: components-bysidecar-me
-  namespace: bysidecar-pre
+  name: components-josedelrio85-me
+  namespace: josedelrio85-pre
 spec:
-  secretName: tls-components-bysidecar-me
+  secretName: tls-components-josedelrio85-me
   issuerRef:
     name: letsencrypt
     kind: ClusterIssuer
-  commonName: components.bysidecar.me
+  commonName: components.josedelrio85.me
   dnsNames:
-  - components.bysidecar.me
+  - components.josedelrio85.me
   acme:
     config:
     - dns01:
         provider: aws-route53
       domains:
-      - components.bysidecar.me
+      - components.josedelrio85.me

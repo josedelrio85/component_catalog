@@ -43,13 +43,13 @@ ingress:
     # kubernetes.io/ingress.class: nginx
     kubernetes.io/tls-acme: "true"
   hosts:
-    - host: components.bysidecar.me
+    - host: components.josedelrio85.me
       paths: 
         - /
   tls:
-   - secretName: tls-components-bysidecar-me
+   - secretName: tls-components-josedelrio85-me
      hosts:
-       - components.bysidecar.me
+       - components.josedelrio85.me
 
 env:
 - name: COMPONENTS_DB_URL # name of variable in the code

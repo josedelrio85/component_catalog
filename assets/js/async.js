@@ -1,4 +1,4 @@
-import { landingCommander } from '../../node_modules/@bysidecar/landing_commander/dist/main';
+import { landingCommander } from '../../node_modules/@josedelrio85/landing_commander/dist/main';
 import  './functions.js';
 
 document.addEventListener("DOMContentLoaded", (e) => {

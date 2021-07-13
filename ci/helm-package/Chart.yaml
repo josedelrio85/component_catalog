@@ -1,6 +1,6 @@
 apiVersion: v2
 name: compcatalog
-description: Bysidecar's component catalog
+description: josedelrio85's component catalog
 
 # A chart can be either an 'application' or a 'library' chart.
 #

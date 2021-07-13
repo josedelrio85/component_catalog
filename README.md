@@ -1,6 +1,6 @@
 # Component catalog web project
 
-List of components used along the differents Bysidecar's web projects. 
+List of components used along the differents josedelrio85's web projects. 
 
 The goal of this project is to have a kind of repository/catalog to have the capability of reuse this components.
  
@@ -145,6 +145,6 @@ docker container run --name comp -p 9000:80 --network mysql_default comp
 
   ```sql
   insert into components.user (username, password, email, is_active, roles, salt) values
-  ('admin', 'test', 'admin@bysidecar.com', '1', '{\"ROLES\": \"ROLE_ADMIN\"}', null),
-  ('test', 'test', 'test@bysidecar.com', '1', '{\"ROLES\": \"ROLE_USER\"}', null);
+  ('admin', 'test', 'admin@josedelrio85.com', '1', '{\"ROLES\": \"ROLE_ADMIN\"}', null),
+  ('test', 'test', 'test@josedelrio85.com', '1', '{\"ROLES\": \"ROLE_USER\"}', null);
   ```
